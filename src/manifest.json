@@ -1,0 +1,13 @@
+{
+  "name": "Cheff Delivery",
+  "short_name": "CheffDelivery",
+  "start_url": "index.html",
+  "display": "standalone",
+  "icons": [{
+    "src": "assets/imgs/logo.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }],
+  "background_color": "#00d900",
+  "theme_color": "#00d900"
+}
