@@ -59,5 +59,29 @@ Deletar | del | User | delUser
 ##### Consumação de dados da API
 Returno de dados em formato json
 
-###### Login via token
-/api/comandas/mobile/login/token/**$_TOKEN_VALUE**
+###### Login via Token
+/api/comandas/mobile/login/token/**$_TOKEN_VALUE**/**$_EMPRESA**
+
+###### Verificação de Token ativo
+/api/webservice/comanda/validate/token/**$_TOKEN_VALUE**/**$_EMPRESA**
+
+###### Lista de Categorias
+/api/categorias/**$_EMPRESA**
+
+###### Produtos de uma categoria
+/api/produtos/**$_EMPRESA**/comanda/**$_ID_CATEGORIA**
+
+###### Detalhes de Produto
+/api/produtos/**$_ID**/**$_EMPRESA**
+
+###### Itens da Comanda
+/api/comandas/**$_ID**/itens/**$_EMPRESA**
+
+###### Lista de produtos para Pesquisa
+/api/produtos/**$_EMPRESA**/comanda
+
+###### BTN Limpar mesa
+Em desenvolvimento
+
+###### ENVIAR/REIMPRIMIR Pedido
+Em desenvolvimento
