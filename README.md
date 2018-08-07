@@ -57,7 +57,7 @@ Listar | list | User | listUsers
 Deletar | del | User | delUser
 
 ##### Consumação de dados da API
-Returno de dados em formato json
+Returno de dados em formato **json**
 
 ###### Login via Token
 /api/comandas/mobile/login/token/**$_TOKEN_VALUE**/**$_EMPRESA**
