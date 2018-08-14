@@ -1,0 +1,52 @@
+page-cardapio {
+  .container-branco {
+    padding: 0;
+    ul {
+      &.lista-categorias {
+        width: 100%;
+        float: left;
+        list-style: none;
+        margin: 30px 0 30px;
+        padding: 0;
+        li {
+          &:nth-child(odd) {
+            width: 100%;
+            float: left;
+            background: $colorlistcat;
+          }
+          a {
+            width: 100%;
+            float: left;
+            font-size: 12px;
+            padding: 20px 20px;
+            text-transform: uppercase;
+            color: $gray;
+            line-height: 22px;
+            &:after {
+              width: 10px;
+              height: 10px;
+              float: left;
+              margin-top: 5px;
+              margin-right: 10px;
+              border-radius: 50%;
+              background: $verde;
+              content: "";
+            }
+            .icon {
+              float: right;
+              font-size: 22px;
+              color: $lightgray;
+            }
+          }
+        }
+      }
+    }
+    .btn-limpar-mesa {
+      background: $azul;
+    }
+  }
+  .scroll-content {
+    z-index: 100;
+    margin-top: 135px !important;
+  }
+}

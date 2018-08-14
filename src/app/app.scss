@@ -1,0 +1,146 @@
+$branco: #FFFFFF;
+$colorlistcat: #f8f8f8;
+$gray: #666666;
+$verde: #00d900;
+$azul: #3c4858;
+$vermelho: #f90200;
+$borderprodutos: #f2f2f2;
+$lightgray: #e1e1e1;
+$backgroudapp: #f1f1f1;
+
+#ion-diagnostics-toast {
+  background: transparent !important;
+}
+ion-content {
+  background-color: $backgroudapp !important;
+}
+ion-navbar {
+  position: absolute;
+  top: 0;
+  background: transparent !important;
+  img.img-logo-branca {
+    max-width: 75%;
+  }
+}
+.back-button.show-back-button {
+  position: absolute;
+  left: 15px;
+  top: 65%;
+  color: $branco;
+}
+.toolbar-background {
+  background: transparent;
+  border-width: 0 !important;
+}
+.container-topo-app {
+  color: $branco;
+  margin-top: 10px;
+  .col-6 {
+    margin: 0;
+  }
+  span {
+    position: relative;
+  }
+  button {
+    float: left;
+    background: transparent;
+    &:focus {
+      outline: none;
+    }
+  }
+  img.icons {
+    max-width: 60%;
+    float: right;
+  }
+  .pesquisar {
+    padding-right: 0;
+    button {
+      position: relative;
+      float: right;
+      padding-right: 0;
+    }
+  }
+  .carrinho {
+    padding-left: 0;
+    button {
+      position: relative;
+      float: right;
+      padding-left: 0;
+    }
+    .numero-items {
+      width: 17px;
+      height: 17px;
+      font-size: 12px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      border-radius: 50%;
+      color: $branco;
+      background: $verde;
+    }
+  }
+  .titulo-topo {
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 400;
+    b {
+      font-size: 18px;
+      font-weight: 800;
+    }
+  }
+}
+.container-branco {
+  width: 100%;
+  padding: 0 !important;
+  float: left;
+  z-index: 10;
+  position: relative;
+  border-radius: 20px;
+  background: $branco;
+  h2 {
+    &.title-categorias {
+      color: $verde;
+      font-size: 16px;
+      margin-top: 30px;
+      text-transform: uppercase;
+    }
+  }
+  h3 {
+    &.subtitle-categorias {
+      font-size: 12px;
+      color: #999999;
+      font-weight: 200;
+    }
+  }
+  img.img-fluid {
+    display: table;
+    max-width: 70%;
+    margin: -150px auto 0;
+  }
+  .img-header {
+    position: relative;
+    z-index: 0;
+  }
+  .btn-ver-cardapio {
+    width: 100%;
+    height: auto;
+    position: relative;
+    background: $verde;
+    color: $branco;
+    border-radius: 20px;
+    text-transform: uppercase;
+    padding: 30px;
+    margin-top: 60px;
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 30px;
+    &:focus {
+      outline: none;
+    }
+    img.icon-cardapio {
+      float: left;
+      max-width: 10%;
+      margin: 0 0 0 20px;
+    }
+  }
+}

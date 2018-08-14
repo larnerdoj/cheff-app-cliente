@@ -1,0 +1,94 @@
+page-login {
+  * {
+    outline: none;
+  }
+  ::-webkit-input-placeholder {
+    color: #3c4858;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 20px;
+  }
+
+  :-moz-placeholder { /* Firefox 18- */
+    color: #3c4858;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 20px;
+  }
+
+  ::-moz-placeholder {  /* Firefox 19+ */
+    color: #3c4858;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 20px;
+  }
+
+  :-ms-input-placeholder {
+    color: #3c4858;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 20px;
+  }
+  #ion-diagnostics-toast {
+    background: transparent !important;
+  }
+  .scroll-content {
+    z-index: 100;
+    overflow: visible;
+    margin-top: 235px !important;
+  }
+  .container-branco {
+    img.img-fluid {
+      display: table;
+      max-width: 70%;
+      margin: -150px auto 0;
+    }
+    .row {
+      padding: 0 15px;
+    }
+    .font-token {
+      font-size: 16px;
+      color: $gray;
+    }
+    .btn-ver-cardapio {
+      margin-bottom: -20px;
+    }
+    .no-padding {
+      padding: 0;
+    }
+    .input-login {
+      padding: 0 25px;
+    }
+    form {
+      width: 100%;
+      margin-top: 50px;
+      float: left;
+      position: relative;
+      input[type=text] {
+        width: 100%;
+        border: 0;
+        border-bottom: 2px solid #DDDDDD;
+        padding-left: 20px;
+        color: #3c4858;
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: 20px;
+      }
+      button {
+        width: 60px;
+        height: 50px;
+        position: absolute;
+        top: -20px;
+        right: 0;
+        background: $azul;
+        border-radius: 10px;
+        &.btn-code {
+          right: 25px;
+        }
+        img {
+          max-width: 80%;
+        }
+      }
+    }
+  }
+}

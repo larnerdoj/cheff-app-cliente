@@ -34,12 +34,27 @@ PAGES
 import { CheffCliente } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import {LoginPage} from "../pages/login/login";
+import {CardapioPage} from "../pages/cardapio/cardapio";
+import {ProdutosPage} from "../pages/produtos/produtos";
+import {DetalheProdutoPage} from "../pages/detalhe-produto/detalhe-produto";
+import {HttpService} from "../providers/http";
+import {GlobalsService} from "../providers/globals";
+import {StorageService} from "../providers/storage";
+import {ErrorTokenPage} from "../pages/error-token/error-token";
+import {ComandaFinalizadaPage} from "../pages/comanda-finalizada/comanda-finalizada";
 
 @NgModule({
   declarations: [
     CheffCliente,
     HomePage,
-    ListPage
+    ListPage,
+    LoginPage,
+    CardapioPage,
+    ProdutosPage,
+    DetalheProdutoPage,
+    ErrorTokenPage,
+    ComandaFinalizadaPage
   ],
   imports: [
     BrowserModule,
@@ -62,17 +77,26 @@ import { ListPage } from '../pages/list/list';
   entryComponents: [
     CheffCliente,
     HomePage,
-    ListPage
+    ListPage,
+    LoginPage,
+    CardapioPage,
+    ProdutosPage,
+    DetalheProdutoPage,
+    ErrorTokenPage,
+    ComandaFinalizadaPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    
+
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     { provide: LOCALE_ID, useValue: 'pt-BR'},
 
     CurrencyPipe,
     DatePipe,
+    HttpService,
+    GlobalsService,
+    StorageService,
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
