@@ -1,0 +1,140 @@
+<!--
+  Generated template for the CardapioPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <img class="img-header" [src]="this.GlobalsService.getImgRandom()" alt="backgrounds">
+  <ion-navbar>
+    <div class="container container-topo-app">
+      <div class="row">
+        <div class="col-5"><img src="assets/imgs/logo-branca.png" class="img-logo-branca" alt=""></div>
+        <div class="col-5 offset-2">
+          <div class="row">
+            <div class="offset-2 col-5 pesquisar">
+              <button>
+                <img src="assets/imgs/icons/search-white.png" class="icons" alt="">
+              </button>
+            </div>
+            <div class="col-5 carrinho">
+              <button (click)="verSacola()">
+                <img src="assets/imgs/icons/shopping-bag-white.png" class="icons" alt="">
+                <span class="numero-items">3</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 titulo-topo text-center">
+          <b>{{ StorageService.getItem('nomeComanda') }}</b> <br>
+          {{ StorageService.getItem('codigoComanda') }}
+        </div>
+      </div>
+    </div>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 container-branco">
+        <h2 class="title-categorias text-center">Minha Sacola</h2>
+        <h3 class="subtitle-categorias text-center">envie seu pedido de uma só vez</h3>
+        <div class="row container-branco-bottom container-item-sacola">
+          <div class="col-7">
+            <img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">
+            <span class="valor-produto-carrinho">
+              <b>Águas</b> <br>
+              Unit: R$ 5,00 <br>
+              Total: R$ 15,00
+            </span>
+          </div>
+          <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 container-qtd-produto">
+            <button (click)="subtrai()" class="del">-</button>
+            <input id="number2" type="number" value="1" min="1">
+            <button (click)="soma()" (mouseenter)="onmouseenter($event)" class="add">+</button>
+          </div>
+          <div class="col-2 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <img class="cancel-item" src="assets/imgs/icons/cancel.png" alt="">
+          </div>
+        </div>
+        <div class="row container-branco-bottom container-item-sacola">
+          <div class="col-7">
+            <img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">
+            <span class="valor-produto-carrinho">
+              <b>Águas</b> <br>
+              Unit: R$ 5,00 <br>
+              Total: R$ 15,00
+            </span>
+          </div>
+          <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 container-qtd-produto">
+            <button (click)="subtrai()" class="del">-</button>
+            <input id="number3" type="number" value="1" min="1">
+            <button (click)="soma()" (mouseenter)="onmouseenter($event)" class="add">+</button>
+          </div>
+          <div class="col-2 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+            <img class="cancel-item" src="assets/imgs/icons/cancel.png" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="col-12 container-branco container-branco-bottom text-center">
+        <span class="valor-pedido">
+          Total: <br>
+          <b>R$ 25,00</b>
+        </span>
+      </div>
+
+      <div class="col-12 container-branco container-botoes">
+        <div class="row">
+          <div class="col-8">
+            <button type="submit" class="btn-block btn-ver-cardapio"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Fazer Pedido</button>
+          </div>
+          <div class="col-4">
+            <button type="submit" class="btn-block btn-ver-cardapio btn-imprimir btn-cancelar"><img src="assets/imgs/icons/cancel-white.png" alt=""></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 container-branco container-branco-rounded">
+        <h2 class="title-categorias text-center">Meus Pedidos</h2>
+        <h3 class="subtitle-categorias text-center">itens já pedidos</h3>
+        <div class="row container-branco-bottom container-item-sacola">
+          <div class="col-7">
+            <img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">
+            <span class="valor-produto-carrinho">
+              <b>Águas</b> <br>
+              Unit: R$ 5,00 <br>
+              Total: R$ 15,00
+            </span>
+          </div>
+          <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 container-qtd-produto">
+            <span class="qtd-itens-pedidos">3</span>
+          </div>
+          <div class="col-2 col-sm-4 col-md-4 col-lg-4 col-xl-4 btn-refazer-pedido">
+            <img class="cancel-item" src="assets/imgs/icons/print-white.png" alt="">
+          </div>
+        </div>
+        <div class="row container-branco-bottom container-item-sacola">
+          <div class="col-7">
+            <img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">
+            <span class="valor-produto-carrinho">
+              <b>Águas</b> <br>
+              Unit: R$ 5,00 <br>
+              Total: R$ 15,00
+            </span>
+          </div>
+          <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 container-qtd-produto">
+            <span class="qtd-itens-pedidos">3</span>
+          </div>
+          <div class="col-2 col-sm-4 col-md-4 col-lg-4 col-xl-4 btn-refazer-pedido">
+            <img class="cancel-item" src="assets/imgs/icons/print-white.png" alt="">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

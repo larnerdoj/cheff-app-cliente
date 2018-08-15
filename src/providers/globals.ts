@@ -54,8 +54,8 @@ export class GlobalsService {
       //this.nav.setRoot()
     }
 
-
     getCurrency(amount: number) {
       return this.currencyPipe.transform(amount, 'BRL', true, '1.2-2');
     }
+
 }

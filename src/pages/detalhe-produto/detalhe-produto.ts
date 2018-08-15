@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {ProdutosPage} from "../produtos/produtos";
 import {GlobalsService} from "../../providers/globals";
 import {StorageService} from "../../providers/storage";
+import {HttpService} from "../../providers/http";
 
 /**
  * Generated class for the DetalheProdutoPage page.
@@ -18,16 +19,34 @@ import {StorageService} from "../../providers/storage";
 })
 export class DetalheProdutoPage {
 
+  strIdProduto: string;
+  strCategoriaProduto: string;
+  arDetalhesProduto: Array<any>;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public StorageService: StorageService
+    private HttpService: HttpService,
+    public StorageService: StorageService,
+    private GlobalsService: GlobalsService,
   ) {
 
   }
 
   ionViewDidLoad() {
-    //console.log('ionViewDidLoad DetalheProdutoPage');
+    this.strIdProduto = this.navParams.get("id");
+    this.strCategoriaProduto = this.navParams.get("categoria");
+    console.log(this.strIdProduto);
+    this.HttpService.JSON_GET(`/produtos/${this.strIdProduto}/${this.GlobalsService.strEmpresa}`, false,true, 'json')
+      .then(
+        (res) => {
+          console.log(res.json());
+          this.arDetalhesProduto = res.json();
+        }
+      ),
+      (error) => {
+        console.log(error);
+      }
   }
 
   voltar() {

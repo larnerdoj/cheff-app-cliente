@@ -49,8 +49,8 @@ export class ProdutosPage {
 
   }
 
-  detalheProduto() {
-    this.navCtrl.push(DetalheProdutoPage);
+  detalheProduto(produto) {
+    this.navCtrl.push(DetalheProdutoPage, { id: produto.id, categoria: produto.categoria });
   }
 
 }

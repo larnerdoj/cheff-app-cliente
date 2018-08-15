@@ -43,6 +43,7 @@ import {GlobalsService} from "../providers/globals";
 import {StorageService} from "../providers/storage";
 import {ErrorTokenPage} from "../pages/error-token/error-token";
 import {ComandaFinalizadaPage} from "../pages/comanda-finalizada/comanda-finalizada";
+import {CarrinhoPage} from "../pages/carrinho/carrinho";
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import {ComandaFinalizadaPage} from "../pages/comanda-finalizada/comanda-finaliz
     ProdutosPage,
     DetalheProdutoPage,
     ErrorTokenPage,
-    ComandaFinalizadaPage
+    ComandaFinalizadaPage,
+    CarrinhoPage
   ],
   imports: [
     BrowserModule,
@@ -83,7 +85,8 @@ import {ComandaFinalizadaPage} from "../pages/comanda-finalizada/comanda-finaliz
     ProdutosPage,
     DetalheProdutoPage,
     ErrorTokenPage,
-    ComandaFinalizadaPage
+    ComandaFinalizadaPage,
+    CarrinhoPage
   ],
   providers: [
     StatusBar,

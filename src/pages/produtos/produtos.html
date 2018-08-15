@@ -45,10 +45,10 @@
         <h3 class="subtitle-categorias text-center">Monte o seu pedido:</h3>
         <ul class="lista-produtos row">
           <li *ngFor="let produto of arListaProdutos" class="col-6">
-            <img src="{{ produto.print_item }}" (click)="detalheProduto()" alt="">
+            <img src="assets/imgs/produto.jpg" (click)="detalheProduto(produto)" alt="">
             <div class="descricao">
               <h2 class="title-produto">{{ produto.descricao }}</h2>
-              <span *ngIf="produto.vl_promotion > 0" class="valor-promocao">{{ produto.vl_promotion }}</span>
+              <span *ngIf="produto.vl_promotion > 0" class="valor-promocao">{{ GlobalsService.getCurrency(produto.vl_promotion) }}</span>
               <span class="valor-normal">{{ GlobalsService.getCurrency(produto.valor) }}</span>
               <span *ngIf="produto.status == 'INDISPONIVEL'" class="indisponivel">Indisponível</span>
               <button *ngIf="produto.status == 'DISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png"></button>

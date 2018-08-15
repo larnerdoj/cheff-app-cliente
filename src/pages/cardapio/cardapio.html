@@ -13,22 +13,22 @@
         <div class="col-5"><img src="assets/imgs/logo-branca.png" class="img-logo-branca" alt=""></div>
         <div class="col-5 offset-2">
           <div class="row">
-            <div class="col-4 pesquisar">
+            <div class="offset-2 col-5 pesquisar">
               <button>
                 <img src="assets/imgs/icons/search-white.png" class="icons" alt="">
               </button>
             </div>
-            <div class="col-4  carrinho">
-              <button>
+            <div class="col-5  carrinho">
+              <button (click)="verCarrinho()">
                 <img src="assets/imgs/icons/shopping-bag-white.png" class="icons" alt="">
                 <span class="numero-items">3</span>
               </button>
             </div>
-            <div class="col-4 carrinho">
-              <button (click)="GlobalsService.logout()">
-                <img src="assets/imgs/icons/cancel-white.png" class="icons" alt="">
-              </button>
-            </div>
+            <!--<div class="col-4 carrinho">-->
+              <!--<button (click)="GlobalsService.logout()">-->
+                <!--<img src="assets/imgs/icons/cancel-white.png" class="icons" alt="">-->
+              <!--</button>-->
+            <!--</div>-->
           </div>
         </div>
         <div class="col-12 titulo-topo text-center">

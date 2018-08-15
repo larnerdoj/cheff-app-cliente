@@ -6,6 +6,7 @@ import {StorageService} from "../../providers/storage";
 import {LoginPage} from "../login/login";
 import {ErrorTokenPage} from "../error-token/error-token";
 import {HttpService} from "../../providers/http";
+import {CarrinhoPage} from "../carrinho/carrinho";
 
 /**
  * Generated class for the CardapioPage page.
@@ -66,8 +67,8 @@ export class CardapioPage {
     this.navCtrl.push(ProdutosPage, { id: idCategoria.id, categoria: idCategoria.categoria });
   }
 
-  // verDetalhes(filme) {
-  //   this.navCtrl.push(DetailsCartePage, { id: filme.id, name: filme.name });
-  // }
+  verCarrinho() {
+    this.navCtrl.push(CarrinhoPage);
+  }
 
 }

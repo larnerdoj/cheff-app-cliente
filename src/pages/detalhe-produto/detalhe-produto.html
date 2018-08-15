@@ -26,9 +26,9 @@
             </div>
           </div>
         </div>
-        <div class="col-12 titulo-topo text-center">
-          <b>NOME DO PRODUTO</b> <br>
-          Categoria
+        <div *ngIf="arDetalhesProduto" class="col-12 titulo-topo text-center">
+          <b>{{ this.arDetalhesProduto.name }}</b> <br>
+          {{ strCategoriaProduto }}
         </div>
       </div>
     </div>
@@ -39,16 +39,16 @@
 
 <ion-content padding>
   <div class="container">
-    <div class="row">
+    <div class="row" *ngIf="arDetalhesProduto">
       <div class="col-12 container-branco">
-        <h2 class="title-categorias title-produtos text-left">Nome do Produto Cadastrado</h2>
-        <h3 class="subtitle-categorias subtitle-produtos text-left">Nome da Categoria do Produto</h3>
+        <h2 class="title-categorias title-produtos text-left">{{ this.arDetalhesProduto.name }}</h2>
+        <h3 class="subtitle-categorias subtitle-produtos text-left">{{ strCategoriaProduto }}</h3>
       </div>
       <div class="col-12 container-branco container-branco-bottom">
         <div class="row">
           <div class="col-4">
-            <span class="valor-promocao">R$ 15,00</span> <br>
-            <span class="valor-normal">R$ 13,00</span>
+            <span *ngIf="this.arDetalhesProduto.vl_promotion > 0" class="valor-promocao">{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_promotion) }}</span> <br>
+            <span *ngIf="this.arDetalhesProduto.vl_venda > 0" class="valor-normal">{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_venda) }}</span>
           </div>
           <div class="col-4">
             <button class="add-carrinho"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
@@ -58,6 +58,27 @@
             <input id="number" type="number" value="1" min="1">
             <button (click)="soma()" (mouseenter)="onmouseenter($event)" class="add">+</button>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 container-branco">
+      <p class="descricao-produto">
+        <b>Ingredientes:</b>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta excepturi expedita harum magnam maiores numquam optio, repellat similique temporibus ul!
+      </p>
+    </div>
+    <div class="col-12 container-branco container-branco-bottom container-branco-bottom-no-margin">
+      <p class="descricao-produto">
+        <ion-icon name="ios-timer-outline"></ion-icon> 20 minutos
+      </p>
+    </div>
+    <div class="col-12 container-branco container-botoes">
+      <div class="row">
+        <div class="col-8">
+          <button type="submit" class="btn-block btn-ver-cardapio"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Adicionar</button>
+        </div>
+        <div class="col-4">
+          <button type="submit" class="btn-block btn-ver-cardapio btn-imprimir"><img src="assets/imgs/icons/print-white.png" alt=""></button>
         </div>
       </div>
     </div>

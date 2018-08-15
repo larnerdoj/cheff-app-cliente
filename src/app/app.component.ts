@@ -30,6 +30,7 @@ import {ErrorTokenPage} from "../pages/error-token/error-token";
 import {StorageService} from "../providers/storage";
 import {GlobalsService} from "../providers/globals";
 import {ComandaFinalizadaPage} from "../pages/comanda-finalizada/comanda-finalizada";
+import {CarrinhoPage} from "../pages/carrinho/carrinho";
 
 @Component({
   templateUrl: 'app.html'
@@ -64,7 +65,8 @@ export class CheffCliente {
       { title: 'Produtos', component: ProdutosPage },
       { title: 'Erro Token', component: ErrorTokenPage },
       { title: 'Detalhes Produto', component: DetalheProdutoPage },
-      { title: 'Comanda Finalizada', component: ComandaFinalizadaPage }
+      { title: 'Comanda Finalizada', component: ComandaFinalizadaPage },
+      { title: 'Carrinho', component: CarrinhoPage }
     ];
 
     (this.StorageService.getItem('isLogged') === 'true') ? this.rootPage = CardapioPage : this.rootPage = LoginPage;
