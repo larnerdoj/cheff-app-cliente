@@ -21,7 +21,7 @@
             <div class="col-5  carrinho">
               <button (click)="verCarrinho()">
                 <img src="assets/imgs/icons/shopping-bag-white.png" class="icons" alt="">
-                <span class="numero-items">3</span>
+                <span class="numero-items">{{ CarrinhoProvider.itensCart.length }}</span>
               </button>
             </div>
             <!--<div class="col-4 carrinho">-->

@@ -6,7 +6,9 @@
 -->
 <ion-header>
 
-  <img class="img-header" src="assets/imgs/backs/01.png" alt="backgrounds">
+  <div *ngIf="arDetalhesProduto">
+    <img *ngIf="this.arDetalhesProduto.photo === null" class="img-header" src="assets/imgs/backs/01.png" alt="backgrounds">
+  </div>
   <ion-navbar>
     <div class="container container-topo-app">
       <div class="row">
@@ -19,9 +21,9 @@
               </button>
             </div>
             <div class="col-5 carrinho">
-              <button>
+              <button (click)="verCarrinho()">
                 <img src="assets/imgs/icons/shopping-bag-white.png" class="icons" alt="">
-                <span class="numero-items">3</span>
+                <span class="numero-items">{{ CarrinhoProvider.itensCart.length }}</span>
               </button>
             </div>
           </div>
@@ -50,36 +52,61 @@
             <span *ngIf="this.arDetalhesProduto.vl_promotion > 0" class="valor-promocao">{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_promotion) }}</span> <br>
             <span *ngIf="this.arDetalhesProduto.vl_venda > 0" class="valor-normal">{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_venda) }}</span>
           </div>
-          <div class="col-4">
-            <button class="add-carrinho"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
-          </div>
-          <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-            <button (click)="subtrai()" class="del">-</button>
-            <input id="number" type="number" value="1" min="1">
-            <button (click)="soma()" (mouseenter)="onmouseenter($event)" class="add">+</button>
+          <div class="col-8">
+            <div class="row">
+              <form #form="ngForm" (ngSubmit)="addItemCarrinho(arDetalhesProduto, form)" class="col-6">
+                <div>
+                  <button type="submit" class="add-carrinho" disabled *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
+                  <button type="submit" class="add-carrinho" *ngIf="this.arDetalhesProduto.sts === 'DISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
+                  <input id="number-hidden" type="hidden" name="qtdProduto" [(ngModel)]="qtdProduto" min="1">
+                </div>
+              </form>
+              <div class="col-6">
+                <div class="row">
+                  <div class="col-4 subtrai">
+                    <button type="submit" (click)="subtrai()" class="del">-</button>
+                  </div>
+                  <div class="col-4 input-number">
+                    <input id="number" type="number" name="qtd-visible" value="{{ qtdProduto }}" min="1" disabled>
+                  </div>
+                  <div class="col-4 somar">
+                    <button type="submit" (click)="soma()" class="add">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-12 container-branco">
-      <p class="descricao-produto">
-        <b>Ingredientes:</b>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta excepturi expedita harum magnam maiores numquam optio, repellat similique temporibus ul!
-      </p>
-    </div>
-    <div class="col-12 container-branco container-branco-bottom container-branco-bottom-no-margin">
-      <p class="descricao-produto">
-        <ion-icon name="ios-timer-outline"></ion-icon> 20 minutos
-      </p>
-    </div>
-    <div class="col-12 container-branco container-botoes">
-      <div class="row">
-        <div class="col-8">
-          <button type="submit" class="btn-block btn-ver-cardapio"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Adicionar</button>
+    <div class="row" *ngIf="arDetalhesProduto">
+      <div class="col-12 container-branco" *ngIf="this.arDetalhesProduto.descr">
+        <p class="descricao-produto">
+          <b>Ingredientes:</b>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta excepturi expedita harum magnam maiores numquam optio, repellat similique temporibus ul!
+        </p>
+      </div>
+      <div class="col-12 container-branco container-branco-bottom container-branco-bottom-no-margin" *ngIf="this.arDetalhesProduto.prepar != 'NULL' && this.arDetalhesProduto.prepar != null && this.arDetalhesProduto.prepar != ''">
+        <p class="descricao-produto">
+          <ion-icon name="ios-timer-outline"></ion-icon> 20 minutos
+        </p>
+      </div>
+      <div class="col-12 container-branco container-botoes">
+        <div class="row" *ngIf="arDetalhesProduto">
+          <div class="col-8">
+            <button type="submit" class="btn-block btn-ver-cardapio" disabled *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Adicionar</button>
+            <button type="submit" class="btn-block btn-ver-cardapio" *ngIf="this.arDetalhesProduto.sts === 'DISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Adicionar</button>
+          </div>
+          <div class="col-4">
+            <button type="submit" class="btn-block btn-ver-cardapio btn-imprimir" disabled *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'"><img src="assets/imgs/icons/print-white.png" alt=""></button>
+            <button type="submit" class="btn-block btn-ver-cardapio btn-imprimir" *ngIf="this.arDetalhesProduto.sts === 'DISPONIVEL'"><img src="assets/imgs/icons/print-white.png" alt=""></button>
+          </div>
         </div>
-        <div class="col-4">
-          <button type="submit" class="btn-block btn-ver-cardapio btn-imprimir"><img src="assets/imgs/icons/print-white.png" alt=""></button>
-        </div>
+      </div>
+    </div>
+    <div class="row produto-indisponivel-detalhes" *ngIf="arDetalhesProduto">
+      <div class="col-12" *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'">
+        <p class="text-center">Produto Indisponível</p>
       </div>
     </div>
   </div>

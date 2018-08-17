@@ -44,6 +44,7 @@ import {StorageService} from "../providers/storage";
 import {ErrorTokenPage} from "../pages/error-token/error-token";
 import {ComandaFinalizadaPage} from "../pages/comanda-finalizada/comanda-finalizada";
 import {CarrinhoPage} from "../pages/carrinho/carrinho";
+import {CarrinhoProvider} from "../providers/carrinho";
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import {CarrinhoPage} from "../pages/carrinho/carrinho";
     HttpService,
     GlobalsService,
     StorageService,
+    CarrinhoProvider
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

@@ -21,7 +21,7 @@
             <div class="col-5 carrinho">
               <button (click)="verSacola()">
                 <img src="assets/imgs/icons/shopping-bag-white.png" class="icons" alt="">
-                <span class="numero-items">3</span>
+                <span class="numero-items">{{ CarrinhoProvider.itensCart.length }}</span>
               </button>
             </div>
           </div>
@@ -43,57 +43,52 @@
       <div class="col-12 container-branco">
         <h2 class="title-categorias text-center">Minha Sacola</h2>
         <h3 class="subtitle-categorias text-center">envie seu pedido de uma só vez</h3>
-        <div class="row container-branco-bottom container-item-sacola">
-          <div class="col-7">
-            <img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">
-            <span class="valor-produto-carrinho">
-              <b>Águas</b> <br>
-              Unit: R$ 5,00 <br>
-              Total: R$ 15,00
-            </span>
-          </div>
-          <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 container-qtd-produto">
-            <button (click)="subtrai()" class="del">-</button>
-            <input id="number2" type="number" value="1" min="1">
-            <button (click)="soma()" (mouseenter)="onmouseenter($event)" class="add">+</button>
-          </div>
-          <div class="col-2 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-            <img class="cancel-item" src="assets/imgs/icons/cancel.png" alt="">
+        <div *ngIf="CarrinhoProvider.itensCart.length === 0">
+          <div class="col-12 text-center font-error-token">
+            Nenhum produto no carrinho!
           </div>
         </div>
-        <div class="row container-branco-bottom container-item-sacola">
-          <div class="col-7">
-            <img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">
-            <span class="valor-produto-carrinho">
-              <b>Águas</b> <br>
-              Unit: R$ 5,00 <br>
-              Total: R$ 15,00
-            </span>
+        <div *ngFor="let item of CarrinhoProvider.itensCart" class="row container-branco-bottom container-item-sacola">
+          <div class="col-8">
+            <div class="row">
+              <div class="col-4 container-img-sacola">
+                <img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">
+              </div>
+              <div class="col-8">
+                <span class="valor-produto-carrinho">
+                  <b>{{ item.ItemName }}</b> <br>
+                  Unit: {{ GlobalsService.getCurrency(item.ItemValor)  }} <br>
+                  Total: R$ {{ GlobalsService.getCurrency(item.ItemValor * item.ItemQTD) }}
+                </span>
+              </div>
+            </div>
           </div>
-          <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 container-qtd-produto">
+          <div class="col-2 col-sm-2 col-md-2 col-lg-3 col-xl-3 container-qtd-produto">
             <button (click)="subtrai()" class="del">-</button>
-            <input id="number3" type="number" value="1" min="1">
-            <button (click)="soma()" (mouseenter)="onmouseenter($event)" class="add">+</button>
+            <input id="number2" type="number" [value]=item.ItemQTD min="1">
+            <button (click)="soma(item.ItemQTD)" class="add">+</button>
           </div>
           <div class="col-2 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-            <img class="cancel-item" src="assets/imgs/icons/cancel.png" alt="">
+            <img (click)="cancelarItem(item)" class="cancel-item" src="assets/imgs/icons/cancel.png" alt="">
           </div>
         </div>
       </div>
       <div class="col-12 container-branco container-branco-bottom text-center">
         <span class="valor-pedido">
           Total: <br>
-          <b>R$ 25,00</b>
+          <b>{{ GlobalsService.getCurrency(CarrinhoProvider.totalCart) }}</b>
         </span>
       </div>
 
       <div class="col-12 container-branco container-botoes">
         <div class="row">
           <div class="col-8">
-            <button type="submit" class="btn-block btn-ver-cardapio"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Fazer Pedido</button>
+            <button type="submit" class="btn-block btn-ver-cardapio" disabled *ngIf="CarrinhoProvider.itensCart.length === 0"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Fazer Pedido</button>
+            <button type="submit" class="btn-block btn-ver-cardapio" *ngIf="this.CarrinhoProvider.itensCart.length > 0"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Fazer Pedido</button>
           </div>
           <div class="col-4">
-            <button type="submit" class="btn-block btn-ver-cardapio btn-imprimir btn-cancelar"><img src="assets/imgs/icons/cancel-white.png" alt=""></button>
+            <button (click)="esvaziarCarrinho()" type="submit" class="btn-block btn-ver-cardapio btn-imprimir btn-cancelar" disabled *ngIf="CarrinhoProvider.itensCart.length === 0"><img src="assets/imgs/icons/cancel-white.png" alt=""></button>
+            <button (click)="esvaziarCarrinho()" type="submit" class="btn-block btn-ver-cardapio btn-imprimir btn-cancelar" *ngIf="CarrinhoProvider.itensCart.length > 0"><img src="assets/imgs/icons/cancel-white.png" alt=""></button>
           </div>
         </div>
       </div>
@@ -103,12 +98,18 @@
         <h3 class="subtitle-categorias text-center">itens já pedidos</h3>
         <div class="row container-branco-bottom container-item-sacola">
           <div class="col-7">
-            <img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">
-            <span class="valor-produto-carrinho">
-              <b>Águas</b> <br>
-              Unit: R$ 5,00 <br>
-              Total: R$ 15,00
-            </span>
+            <div class="row">
+              <div class="col-5 container-img-sacola">
+                <img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">
+              </div>
+              <div class="col-7">
+                <span class="valor-produto-carrinho">
+                  <b>Águas</b> <br>
+                  Unit: R$ 5,00 <br>
+                  Total: R$ 15,00
+                </span>
+              </div>
+            </div>
           </div>
           <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 container-qtd-produto">
             <span class="qtd-itens-pedidos">3</span>
@@ -119,12 +120,18 @@
         </div>
         <div class="row container-branco-bottom container-item-sacola">
           <div class="col-7">
-            <img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">
-            <span class="valor-produto-carrinho">
-              <b>Águas</b> <br>
-              Unit: R$ 5,00 <br>
-              Total: R$ 15,00
-            </span>
+            <div class="row">
+              <div class="col-5 container-img-sacola">
+                <img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">
+              </div>
+              <div class="col-7">
+                <span class="valor-produto-carrinho">
+                  <b>Acompanhamento Vinagrete</b> <br>
+                  Unit: R$ 5,00 <br>
+                  Total: R$ 15,00
+                </span>
+              </div>
+            </div>
           </div>
           <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 container-qtd-produto">
             <span class="qtd-itens-pedidos">3</span>

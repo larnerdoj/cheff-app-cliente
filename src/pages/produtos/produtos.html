@@ -19,9 +19,9 @@
               </button>
             </div>
             <div class="col-5 carrinho">
-              <button>
+              <button (click)="verCarrinho()">
                 <img src="assets/imgs/icons/shopping-bag-white.png" class="icons" alt="">
-                <span class="numero-items">3</span>
+                <span class="numero-items">{{ CarrinhoProvider.itensCart.length }}</span>
               </button>
             </div>
           </div>
@@ -51,7 +51,7 @@
               <span *ngIf="produto.vl_promotion > 0" class="valor-promocao">{{ GlobalsService.getCurrency(produto.vl_promotion) }}</span>
               <span class="valor-normal">{{ GlobalsService.getCurrency(produto.valor) }}</span>
               <span *ngIf="produto.status == 'INDISPONIVEL'" class="indisponivel">Indisponível</span>
-              <button *ngIf="produto.status == 'DISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
+              <button *ngIf="produto.status == 'DISPONIVEL'" (click)="addItemCarrinho(produto)"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
             </div>
           </li>
           <!--<li class="col-6">-->

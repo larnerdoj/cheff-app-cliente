@@ -3,12 +3,19 @@ page-carrinho {
     img.img-cancel-white {
       max-width: 25%;
       top: 0;
+      padding-left: 0;
     }
   }
   .container-branco {
     padding: 0;
     border-radius: 20px 20px 0 0;
     border-bottom: 1px solid $lightgray;
+    .font-error-token {
+      font-size: 24px;
+      padding-top: 20px;
+      padding-bottom: 30px;
+      color: $gray;
+    }
   }
   .container-branco-bottom {
     border-radius: 0 0 20px 20px;
@@ -117,13 +124,16 @@ page-carrinho {
     margin-top: 135px !important;
   }
   .container-item-sacola {
+    .container-img-sacola {
+      padding-right: 0;
+    }
     &:nth-child(even) {
       padding-top: 0 !important;
     }
     margin-bottom: 0;
     img {
       float: left;
-      max-width: 40%;
+      max-width: 100%;
       margin-right: 10px;
     }
     .valor-produto-carrinho {
@@ -133,7 +143,6 @@ page-carrinho {
       b {
         width: 100%;
         float: left;
-        margin-top: 10px;
         font-size: 12px;
         text-transform: uppercase;
       }
@@ -146,12 +155,23 @@ page-carrinho {
       padding: 0;
     }
     input[type=number] {
+      width: 25px;
+      height: 29px;
       margin-top: 10px;
+      font-size: 20px;
     }
     button {
       &.del,
       &.add{
         margin-top: 10px;
+        font-size: 19px;
+      }
+      &.del {
+        padding-right: 0;
+      }
+      &.add {
+        padding-left: 0;
+        padding-right: 0;
       }
     }
     .btn-refazer-pedido {

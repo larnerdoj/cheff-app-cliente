@@ -55,7 +55,7 @@ export class GlobalsService {
     }
 
     getCurrency(amount: number) {
-      return this.currencyPipe.transform(amount, 'BRL', true, '1.2-2');
+      return this.currencyPipe.transform(amount, 'BRL');
     }
 
 }
