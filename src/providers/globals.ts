@@ -22,8 +22,12 @@ export class GlobalsService {
     lojaApple = '';
     lojaWindows = '';
     strEmpresa: string = '2';
-    //strToken: string = 'SmxObUkzWmpB';
     rootPage: any;
+    pesquisa: string;
+    descricao: string;
+    arPesquisa: Array<any>;
+    resultadoPesquisa: string;
+    arResultadoPesquisa: Array<any>;
 
     constructor(
         //private navCtrl: NavController,

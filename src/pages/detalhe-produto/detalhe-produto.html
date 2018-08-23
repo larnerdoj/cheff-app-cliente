@@ -13,17 +13,22 @@
     <div class="container container-topo-app">
       <div class="row">
         <div class="col-5"><img src="assets/imgs/icons/cancel-white.png" (click)="voltar()" class="img-cancel-white back-button disable-hover bar-button bar-button-ios back-button-ios bar-button-default bar-button-default-ios show-back-button" alt=""></div>
-        <div class="col-5 offset-2">
+        <div class="col-6 offset-1 icones-topo">
           <div class="row">
-            <div class="offset-2 col-5 pesquisar">
-              <button>
+            <div class="col-4 pesquisar">
+              <button (click)="pesquisar()" class="btn-pesquisar">
                 <img src="assets/imgs/icons/search-white.png" class="icons" alt="">
               </button>
             </div>
-            <div class="col-5 carrinho">
+            <div class="col-4  carrinho">
               <button (click)="verCarrinho()">
                 <img src="assets/imgs/icons/shopping-bag-white.png" class="icons" alt="">
                 <span class="numero-items">{{ CarrinhoProvider.itensCart.length }}</span>
+              </button>
+            </div>
+            <div class="col-4 icone-menu">
+              <button class="button-menu" ion-button menuToggle icon-only>
+                <ion-icon name='menu'></ion-icon>
               </button>
             </div>
           </div>

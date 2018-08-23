@@ -17,6 +17,7 @@ export class CarrinhoProvider {
   itensCart: any = [];
   totalCart: number = 0;
   taxaEntrega: number = 0;
+  private qtd: string;
 
   constructor(
     public AlertController: AlertController,
@@ -116,5 +117,38 @@ export class CarrinhoProvider {
       ]
     });
     alert.present();
+  }
+
+  /***************
+   ADICIONAR CARRINHO
+   ***************/
+  addItemCarrinho(item){
+    console.log(item);
+    let alert = this.AlertController.create({
+      title: 'Adicionar a sacola',
+      message: `O item ${item.descricao} será adicionado a sacola`,
+      inputs: [
+        {
+          name: 'qtd',
+          placeholder: 'Digite a quantidade',
+          type: 'number',
+          value: this.qtd
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {}
+        },
+        {
+          text: 'Ok',
+          handler: (res) => {
+            this.addCart(item, res.qtd)
+          }
+        }
+      ]
+    });
+    alert.present();
+    console.log(this.itensCart);
   }
 }

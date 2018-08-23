@@ -8,7 +8,7 @@ Componente principal da aplicacao
 COMPONENTS
 ***********************************************/
 import { Component, ViewChild } from '@angular/core';
-import {Nav, Platform} from 'ionic-angular';
+import {AlertController, Nav, Platform} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpService } from "../providers/http";
@@ -60,15 +60,9 @@ export class CheffCliente {
     this.initializeApp();
 
     this.pages = [
-      { title: 'List', component: ListPage },
-      { title: 'Home', component: HomePage },
-      { title: 'Login', component: LoginPage },
       { title: 'Cardapio', component: CardapioPage },
-      { title: 'Produtos', component: ProdutosPage },
-      { title: 'Erro Token', component: ErrorTokenPage },
-      { title: 'Detalhes Produto', component: DetalheProdutoPage },
-      { title: 'Comanda Finalizada', component: ComandaFinalizadaPage },
-      { title: 'Carrinho', component: CarrinhoPage }
+      { title: 'Carrinho', component: CarrinhoPage },
+      { title: 'Sair do App', component: LoginPage }
     ];
 
     //CRIACÃO DA VÁRIAVEL DE LOGGED, MANTEM O USUÁRIO LOGADO ATÉ A COMANDA SER FINALIZADA

@@ -6,6 +6,7 @@ import {GlobalsService} from "../../providers/globals";
 import {StorageService} from "../../providers/storage";
 import {CarrinhoProvider} from "../../providers/carrinho";
 import {CarrinhoPage} from "../carrinho/carrinho";
+import {PesquisaPage} from "../pesquisa/pesquisa";
 
 @IonicPage()
 @Component({
@@ -59,43 +60,17 @@ export class ProdutosPage {
   }
 
   /***************
-   ADICIONAR CARRINHO
-   ***************/
-  addItemCarrinho(item){
-    console.log(item);
-    let alert = this.AlertController.create({
-      title: 'Adicionar a sacola',
-      message: `O item ${item.descricao} será adicionado a sacola`,
-      inputs: [
-        {
-          name: 'qtd',
-          placeholder: 'Digite a quantidade',
-          type: 'number',
-          value: this.qtd
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          handler: () => {}
-        },
-        {
-          text: 'Ok',
-          handler: (res) => {
-            this.CarrinhoProvider.addCart(item, res.qtd)
-          }
-        }
-      ]
-    });
-    alert.present();
-    console.log(this.CarrinhoProvider.itensCart);
-  }
-
-  /***************
    ENVIA O USUÁRIO PARA A SACOLA
    ***************/
   verCarrinho() {
     this.navCtrl.push(CarrinhoPage);
+  }
+
+  /***************
+   ENVIA O USUÁRIO PARA A PESQUISA
+   ***************/
+  pesquisar() {
+    this.navCtrl.push(PesquisaPage);
   }
 
 }

@@ -6,6 +6,7 @@ import {StorageService} from "../../providers/storage";
 import {HttpService} from "../../providers/http";
 import {CarrinhoPage} from "../carrinho/carrinho";
 import {CarrinhoProvider} from "../../providers/carrinho";
+import {PesquisaPage} from "../pesquisa/pesquisa";
 
 @IonicPage()
 @Component({
@@ -79,6 +80,13 @@ export class DetalheProdutoPage {
    ***************/
   verCarrinho() {
     this.navCtrl.push(CarrinhoPage);
+  }
+
+  /***************
+   ENVIA O USUÁRIO PARA A PESQUISA
+   ***************/
+  pesquisar() {
+    this.navCtrl.push(PesquisaPage);
   }
 
   /***************

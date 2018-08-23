@@ -29,11 +29,6 @@
                 <ion-icon name='menu'></ion-icon>
               </button>
             </div>
-            <!--<div class="col-4 carrinho">-->
-              <!--<button (click)="GlobalsService.logout()">-->
-                <!--<img src="assets/imgs/icons/cancel-white.png" class="icons" alt="">-->
-              <!--</button>-->
-            <!--</div>-->
           </div>
         </div>
         <div class="col-12 titulo-topo text-center">
@@ -51,16 +46,24 @@
   <div class="container">
     <div class="row">
       <div class="col-12 container-branco">
-        <h2 class="title-categorias text-center">O Que Deseja Pedir?</h2>
-        <h3 class="subtitle-categorias text-center">selecione um tipo de prato na lista abaixo:</h3>
-        <ul class="lista-categorias">
-          <li *ngFor="let idCategoria of arListaCategorias">
-            <a (click)="detalheCategoria(idCategoria)">{{ idCategoria.categoria }} <ion-icon name="ios-arrow-forward"></ion-icon></a>
+        <h2 class="title-categorias text-center">Pesquise Seus Produtos</h2>
+        <h3 class="subtitle-categorias text-center">Monte o seu pedido:</h3>
+        <form #form="ngForm" class="form-pesquisa">
+          <input type="text" (keyup)='filtraProdutos($event)' name="pesquisa" placeholder="Digite o produto desejado">
+        </form>
+        <ul class="lista-produtos row">
+          <li *ngFor="let itemFiltrado of itens" class="col-6">
+            <img src="assets/imgs/produto.jpg" (click)="detalheProduto(itemFiltrado)" alt="">
+            <div class="descricao">
+              <h2 class="title-produto">{{ itemFiltrado.descricao }}</h2>
+              <span *ngIf="itemFiltrado.vl_promotion > 0" class="valor-promocao">{{ GlobalsService.getCurrency(itemFiltrado.vl_promotion) }}</span>
+              <span class="valor-normal">{{ GlobalsService.getCurrency(itemFiltrado.valor) }}</span>
+              <span *ngIf="itemFiltrado.status == 'INDISPONIVEL'" class="indisponivel">Indisponível</span>
+              <button *ngIf="itemFiltrado.status == 'DISPONIVEL'" (click)="this.CarrinhoProvider.addItemCarrinho(itemFiltrado)"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
+            </div>
           </li>
         </ul>
-        <button class="btn-block btn-ver-cardapio btn-limpar-mesa"><img src="assets/imgs/icons/table.png" class="img-fluid icon-cardapio" alt="">Limpar Mesa</button>
       </div>
     </div>
   </div>
 </ion-content>
-

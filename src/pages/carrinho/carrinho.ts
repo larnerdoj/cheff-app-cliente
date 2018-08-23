@@ -4,6 +4,7 @@ import {StorageService} from "../../providers/storage";
 import {GlobalsService} from "../../providers/globals";
 import {HttpService} from "../../providers/http";
 import {CarrinhoProvider} from "../../providers/carrinho";
+import {PesquisaPage} from "../pesquisa/pesquisa";
 
 @IonicPage()
 @Component({
@@ -28,8 +29,18 @@ export class CarrinhoPage {
   ionViewDidLoad() {
   }
 
-  verCarrinho(item) {
+  /***************
+   ENVIA O USUÁRIO PARA A SACOLA
+   ***************/
+  verCarrinho() {
     this.navCtrl.push(CarrinhoPage);
+  }
+
+  /***************
+   ENVIA O USUÁRIO PARA A PESQUISA
+   ***************/
+  pesquisar() {
+    this.navCtrl.push(PesquisaPage);
   }
 
   /***************
@@ -78,23 +89,16 @@ export class CarrinhoPage {
       ]
     });
     alert.present();
-    console.log(this.CarrinhoProvider.itensCart);
   }
 
-  soma(ItemQTD) {
-    console.log(ItemQTD);
-    this.qtdProduto = ItemQTD;
-    this.qtdProduto += 1;
-    console.log(this.qtdProduto);
-    return this.qtdProduto;
+  soma(index) {
+    this.CarrinhoProvider.itensCart[index].ItemQTD++;
+    this.CarrinhoProvider.calculaCarrinho();
   }
-  //
-  // subtrai(item) {
-  //   this.qtdProduto -= 1;
-  //   if (this.qtdProduto <= 0)
-  //     this.qtdProduto = 1;
-  //   console.log(this.qtdProduto);
-  //   return this.qtdProduto;
-  // }
+
+  subtrai(index) {
+    (this.CarrinhoProvider.itensCart[index].ItemQTD === 1) ? this.CarrinhoProvider.itensCart[index].ItemQTD = 1 : this.CarrinhoProvider.itensCart[index].ItemQTD--;
+    this.CarrinhoProvider.calculaCarrinho();
+  }
 
 }

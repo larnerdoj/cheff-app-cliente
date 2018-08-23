@@ -45,6 +45,7 @@ import {ErrorTokenPage} from "../pages/error-token/error-token";
 import {ComandaFinalizadaPage} from "../pages/comanda-finalizada/comanda-finalizada";
 import {CarrinhoPage} from "../pages/carrinho/carrinho";
 import {CarrinhoProvider} from "../providers/carrinho";
+import {PesquisaPage} from "../pages/pesquisa/pesquisa";
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import {CarrinhoProvider} from "../providers/carrinho";
     DetalheProdutoPage,
     ErrorTokenPage,
     ComandaFinalizadaPage,
-    CarrinhoPage
+    CarrinhoPage,
+    PesquisaPage
   ],
   imports: [
     BrowserModule,
@@ -87,7 +89,8 @@ import {CarrinhoProvider} from "../providers/carrinho";
     DetalheProdutoPage,
     ErrorTokenPage,
     ComandaFinalizadaPage,
-    CarrinhoPage
+    CarrinhoPage,
+    PesquisaPage
   ],
   providers: [
     StatusBar,
