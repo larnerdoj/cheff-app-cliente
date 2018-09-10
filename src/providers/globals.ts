@@ -12,7 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import {HttpService} from "./http";
 import {LoginPage} from "../pages/login/login";
 import {StorageService} from "./storage";
-import {Nav, NavController} from "ionic-angular";
+import {AlertController, Nav, NavController} from "ionic-angular";
 import {CurrencyPipe} from "@angular/common";
 
 @Injectable()
@@ -30,19 +30,12 @@ export class GlobalsService {
     arResultadoPesquisa: Array<any>;
 
     constructor(
-        //private navCtrl: NavController,
         public DomSanitizer: DomSanitizer,
         private HttpService: HttpService,
         private StorageService: StorageService,
-        public currencyPipe: CurrencyPipe
+        public currencyPipe: CurrencyPipe,
+        public AlertController: AlertController
     ) { }
-
-    // constructor(
-    //   platform: Platform,
-    //   statusBar: StatusBar,
-    //   splashScreen: SplashScreen,
-    //   private settings: SettingsProvider) {
-
 
     //GERANDO IMAGEM ALEATORIA
     getImgRandom() {
@@ -54,12 +47,27 @@ export class GlobalsService {
       this.StorageService.setItem('nomeComanda', '');
       this.StorageService.setItem('codigoComanda', '');
       this.rootPage = LoginPage;
-      //this.nav.setRoot(LoginPage);
-      //this.nav.setRoot()
     }
 
     getCurrency(amount: number) {
       return this.currencyPipe.transform(amount, 'BRL');
+    }
+
+    /***************
+     ALERT FUNCIONALIDADE EM DESENVOLVIMENTO
+     ***************/
+    desenvolvimento(){
+      let alert = this.AlertController.create({
+        title: 'Em breve!',
+        message: `Esta funcionalidade está em desenvolvimento.`,
+        buttons: [
+          {
+            text: 'Ok',
+            handler: (res) => {}
+          }
+        ]
+      });
+      alert.present();
     }
 
 }

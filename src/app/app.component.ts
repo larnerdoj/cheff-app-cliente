@@ -45,7 +45,7 @@ export class CheffCliente {
   strNumero: string;
   public strToken;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{icon: string, title: string, component: any}>;
 
   constructor(
     //public navCtrl: NavController,
@@ -60,9 +60,9 @@ export class CheffCliente {
     this.initializeApp();
 
     this.pages = [
-      { title: 'Cardapio', component: CardapioPage },
-      { title: 'Carrinho', component: CarrinhoPage },
-      { title: 'Sair do App', component: LoginPage }
+      { icon: 'menu.png', title: 'Cardapio', component: CardapioPage },
+      { icon: 'shopping-bag-white.png', title: 'Carrinho', component: CarrinhoPage },
+      { icon: 'cancel-white.png', title: 'Sair do App', component: LoginPage }
     ];
 
     //CRIACÃO DA VÁRIAVEL DE LOGGED, MANTEM O USUÁRIO LOGADO ATÉ A COMANDA SER FINALIZADA

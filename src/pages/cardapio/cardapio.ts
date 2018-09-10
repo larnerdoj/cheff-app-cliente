@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {ProdutosPage} from "../produtos/produtos";
 import {GlobalsService} from "../../providers/globals";
 import {StorageService} from "../../providers/storage";
@@ -28,25 +28,13 @@ export class CardapioPage {
     public StorageService: StorageService,
     private GlobalsService: GlobalsService,
     private HttpService: HttpService,
-    public CarrinhoProvider: CarrinhoProvider
+    public CarrinhoProvider: CarrinhoProvider,
+    public AlertController: AlertController
   )
   {
   }
 
   ionViewDidLoad() {
-    // this.strToken = this.navParams.get("paramStrToken");
-    // //console.log(this.strToken);
-    // this.HttpService.JSON_GET(`/comandas/mobile/login/token/${this.strToken}/${this.GlobalsService.strEmpresa}`, false, true, 'json')
-    //   .then(
-    //     (res) =>{
-    //       //console.log(res.json());
-    //       this.strNomeCliente = res.json().name;
-    //       this.strNumberToken = res.json().code;
-    //     },
-    //     (error) =>{
-    //       console.log(error);
-    //     }
-    //   )
 
     /***************
      GERA O ARRAY COM TODAS AS CATEGORIAS

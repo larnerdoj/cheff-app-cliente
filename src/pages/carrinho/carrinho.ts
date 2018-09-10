@@ -101,4 +101,58 @@ export class CarrinhoPage {
     this.CarrinhoProvider.calculaCarrinho();
   }
 
+  /***************
+   CONFIRMA PEDIDO
+   ***************/
+  confirmaPedido(){
+    let alert = this.AlertController.create({
+      title: 'Confirmação do Pedido',
+      message: `Deseja realmente realizar o pedido?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {}
+        },
+        {
+          text: 'Confirmar',
+          handler: (res) => {
+            //this.CarrinhoProvider.addCartViewProduto(item, form.value.qtdProduto)
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  /***************
+   REFAZER PEDIDO
+   ***************/
+  refazerPedido(item){
+    let alert = this.AlertController.create({
+      title: 'Refazer o Pedido',
+      message: `Deseja refazer o pedido de ${item}?`,
+      inputs: [
+        {
+          name: 'qtd',
+          placeholder: 'Digite a quantidade',
+          type: 'number',
+          value: 'this.qtd'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {}
+        },
+        {
+          text: 'Confirmar',
+          handler: (res) => {
+            //this.addCart(item, res.qtd)
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
 }

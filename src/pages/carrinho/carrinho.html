@@ -89,7 +89,7 @@
         <div class="row">
           <div class="col-8">
             <button type="submit" class="btn-block btn-ver-cardapio" disabled *ngIf="CarrinhoProvider.itensCart.length === 0"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Fazer Pedido</button>
-            <button type="submit" class="btn-block btn-ver-cardapio" *ngIf="this.CarrinhoProvider.itensCart.length > 0"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Fazer Pedido</button>
+            <button type="submit" (click)="confirmaPedido()" class="btn-block btn-ver-cardapio" *ngIf="this.CarrinhoProvider.itensCart.length > 0"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Fazer Pedido</button>
           </div>
           <div class="col-4">
             <button (click)="esvaziarCarrinho()" type="submit" class="btn-block btn-ver-cardapio btn-imprimir btn-cancelar" disabled *ngIf="CarrinhoProvider.itensCart.length === 0"><img src="assets/imgs/icons/cancel-white.png" alt=""></button>
@@ -120,7 +120,7 @@
             <span class="qtd-itens-pedidos">3</span>
           </div>
           <div class="col-2 col-sm-4 col-md-4 col-lg-4 col-xl-4 btn-refazer-pedido">
-            <img class="cancel-item" src="assets/imgs/icons/print-white.png" alt="">
+            <img (click)="refazerPedido(item)" class="cancel-item" src="assets/imgs/icons/repeat.png" alt="">
           </div>
         </div>
         <div class="row container-branco-bottom container-item-sacola">
@@ -142,7 +142,7 @@
             <span class="qtd-itens-pedidos">3</span>
           </div>
           <div class="col-2 col-sm-4 col-md-4 col-lg-4 col-xl-4 btn-refazer-pedido">
-            <img class="cancel-item" src="assets/imgs/icons/print-white.png" alt="">
+            <img (click)="refazerPedido(item)" class="cancel-item" src="assets/imgs/icons/repeat.png" alt="">
           </div>
         </div>
       </div>

@@ -58,7 +58,7 @@
             <a (click)="detalheCategoria(idCategoria)">{{ idCategoria.categoria }} <ion-icon name="ios-arrow-forward"></ion-icon></a>
           </li>
         </ul>
-        <button class="btn-block btn-ver-cardapio btn-limpar-mesa"><img src="assets/imgs/icons/table.png" class="img-fluid icon-cardapio" alt="">Limpar Mesa</button>
+        <button (click)="GlobalsService.desenvolvimento()" class="btn-block btn-ver-cardapio btn-limpar-mesa"><img src="assets/imgs/icons/table.png" class="img-fluid icon-cardapio" alt="">Limpar Mesa</button>
       </div>
     </div>
   </div>
