@@ -54,8 +54,11 @@
       <div class="col-12 container-branco container-branco-bottom">
         <div class="row">
           <div class="col-4">
-            <span *ngIf="this.arDetalhesProduto.vl_promotion > 0" class="valor-promocao">{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_promotion) }}</span> <br>
-            <span *ngIf="this.arDetalhesProduto.vl_venda > 0" class="valor-normal">{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_venda) }}</span>
+            <span *ngIf="this.arDetalhesProduto.vl_promotion > 0" class="valor-normal">{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_promotion) }}</span> <br>
+            <span *ngIf="this.arDetalhesProduto.vl_venda > 0" class="valor-normal" [ngClass]="{'valor-normal': this.arDetalhesProduto.vl_venda > 0, 'valor-promocao': this.arDetalhesProduto.vl_promotion > 0}">{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_venda) }}</span>
+            <br>
+            <span *ngIf="!this.arDetalhesProduto.vl_promotion > 0" class="valor-normal soma-pedido-detalhe">({{ qtdProduto }}x) <br>{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_venda * qtdProduto) }}</span>
+            <span *ngIf="this.arDetalhesProduto.vl_promotion > 0" class="valor-normal soma-pedido-detalhe">({{ qtdProduto }}x) <br>{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_promotion * qtdProduto) }}</span>
           </div>
           <div class="col-8">
             <div class="row">
@@ -104,7 +107,7 @@
           </div>
           <div class="col-4">
             <button type="submit" class="btn-block btn-ver-cardapio btn-imprimir" disabled *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'"><img src="assets/imgs/icons/print-white.png" alt=""></button>
-            <button type="submit" class="btn-block btn-ver-cardapio btn-imprimir" *ngIf="this.arDetalhesProduto.sts === 'DISPONIVEL'"><img src="assets/imgs/icons/print-white.png" alt=""></button>
+            <button ion-button (click)="preparaPedido()" class="btn-block btn-ver-cardapio btn-imprimir" *ngIf="this.arDetalhesProduto.sts === 'DISPONIVEL'"><img src="assets/imgs/icons/print-white.png" alt=""></button>
           </div>
         </div>
       </div>

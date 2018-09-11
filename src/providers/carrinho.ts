@@ -8,7 +8,9 @@ CarrinhoProvider
 COMPONENTS
 ***********************************************************/
 import { Injectable } from '@angular/core';
-import { AlertController } from 'ionic-angular';
+import {AlertController, LoadingController} from 'ionic-angular';
+import {HttpService} from "./http";
+import {StorageService} from "./storage";
 
 @Injectable()
 export class CarrinhoProvider {
@@ -21,6 +23,9 @@ export class CarrinhoProvider {
 
   constructor(
     public AlertController: AlertController,
+    public LoadingController: LoadingController,
+    private HttpService: HttpService,
+    private StorageService: StorageService
   ) {}
 
   /***************
@@ -151,4 +156,107 @@ export class CarrinhoProvider {
     alert.present();
     console.log(this.itensCart);
   }
+
+  /***************
+  ENVIA PEDIDO
+   **************/
+
+  enviaPedido(total, itens) {
+    let alert = this.AlertController.create({
+        title: 'Enviar pedido?',
+        message: 'Deseja enviar seu pedido para preparo?',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: () => {}
+          },
+          {
+            text: 'Enviar',
+            handler: () => {
+              //CRIANDO OBJETO COM TOTAL
+              let objPost = [{
+                total: total,
+                itens: itens
+              }];
+
+              //ENVIANDO PEDIDO PARA O BANCO
+              let loading = this.LoadingController.create({
+                spinner: 'crescent',
+                content: 'Enviando Pedido'
+              });
+              loading.present().then(() => {
+                this.HttpService.JSON_POST(`/comandas/${this.StorageService.getItem('idComanda')}/itens/${this.StorageService.getItem('idAtendente')}`, objPost, false, true, 'json')
+                  .then(
+                    (res)=> {
+                      console.log(res.json());
+                      loading.dismiss();
+                    },
+                    (error) => {
+                      console.log(error);
+                      loading.dismiss();
+                    }
+                  )
+              });
+            }
+          }
+        ]
+      });
+      alert.present();
+  }
+
+  enviaImpressao(itens) {
+
+  }
+
+  // let alert = this.alertCtrl.create({
+  //   title: 'Enviar pedido?',
+  //   message: 'Confirme seu pedido para inciar o preparo!',
+  //   buttons: [
+  //     {
+  //       text: 'Cancelar',
+  //       role: 'cancel',
+  //       handler: () => {}
+  //     },
+  //     {
+  //       text: 'Enviar',
+  //       handler: () => {
+  //
+  //         Promise.resolve(this.calculaTotal())
+  //           .then(() => {
+  //
+  //             //CRIANDO OBJETO COM TOTAL
+  //             let objPost = [{
+  //               total: this.totalPedido,
+  //               itens: this.itensComanda
+  //             }];
+  //
+  //             //EXECUTA JSON
+  //             let loading = this.LoadingController.create({
+  //               spinner: 'crescent',
+  //               content: 'Enviando pedido'
+  //             });
+  //             loading.present().then(() => {
+  //
+  //               this.HttpService.JSON_POST(`/comandas/${this.itemCarregado.id}/itens/${this.StorageService.getItem('i')}`, objPost, false, true, 'json')
+  //                 .then(
+  //                   (res) => {
+  //                     this.enviaImpressao();
+  //                     loading.dismiss();
+  //                   },
+  //                   (error) => {
+  //                     loading.dismiss();
+  //                     this.AlertService.showAlert('ERRO', JSON.parse(error._body));
+  //                   }
+  //                 )
+  //
+  //             });
+  //
+  //           })
+  //
+  //       }
+  //     }
+  //   ]
+  // });
+  // alert.present();
 }

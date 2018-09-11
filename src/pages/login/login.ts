@@ -42,16 +42,19 @@ export class LoginPage {
     this.HttpService.JSON_GET(`/comandas/mobile/login/token/${form.value.strToken}/${this.GlobalsService.strEmpresa}`, false, true, 'json')
       .then(
         (res) =>{
-          //console.log(res.json());
+          console.log(res.json());
           if (res.json() === 'Comanda não encontrada!') {
             this.navCtrl.push(ErrorTokenPage);
             setTimeout(() => {
               this.navCtrl.push(LoginPage, { animate: true, direction: 'back' })
             }, 5000);
           }else {
+            console.log(res.json());
             this.StorageService.setItem('isLogged', true);
             this.StorageService.setItem('nomeComanda', res.json().name);
             this.StorageService.setItem('codigoComanda', res.json().code);
+            this.StorageService.setItem('idComanda', res.json().id);
+            this.StorageService.setItem('userId', res.json().user_id);
             this.navCtrl.setRoot(CardapioPage, { paramStrToken: form.value.strToken });
           }
 

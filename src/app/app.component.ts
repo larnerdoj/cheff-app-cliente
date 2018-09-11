@@ -82,6 +82,8 @@ export class CheffCliente {
               this.StorageService.setItem('isLogged', false);
               this.StorageService.setItem('nomeComanda', '');
               this.StorageService.setItem('codigoComanda', '');
+              this.StorageService.setItem('idComanda', '');
+              this.StorageService.setItem('userId', '');
               setTimeout(() => {
                 this.rootPage = LoginPage;
               }, 5000);

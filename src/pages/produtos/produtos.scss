@@ -42,17 +42,16 @@ page-produtos {
               font-size: 13px;
             }
             span {
-              &.valor-promocao {
-                font-size: 12px;
-                text-decoration: line-through;
-                font-weight: 500;
-                line-height: 22px;
-                color: $vermelho;
-                margin-right: 10px;
-              }
               &.valor-normal {
                 color: $azul;
                 font-weight: 900;
+              }
+              &.valor-promocao {
+                text-decoration: line-through;
+                font-weight: 900;
+                line-height: 22px;
+                color: $vermelho;
+                margin-right: 10px;
               }
               &.indisponivel {
                 width: 100%;

@@ -42,7 +42,7 @@ export class ProdutosPage {
     this.HttpService.JSON_GET(`/produtos/${this.GlobalsService.strEmpresa}/comanda/${this.categoriaId}`, false, true, 'json')
     .then(
         (res) => {
-          //console.log(res.json());
+          console.log(res.json());
           this.arListaProdutos = res.json();
         }
       ),
