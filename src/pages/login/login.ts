@@ -55,6 +55,9 @@ export class LoginPage {
             this.StorageService.setItem('codigoComanda', res.json().code);
             this.StorageService.setItem('idComanda', res.json().id);
             this.StorageService.setItem('userId', res.json().user_id);
+            this.StorageService.setItem('credit', res.json().credit);
+            this.StorageService.setItem('mesa', res.json().mesa);
+            this.StorageService.setItem('atendente', res.json().atendente);
             this.navCtrl.setRoot(CardapioPage, { paramStrToken: form.value.strToken });
           }
 

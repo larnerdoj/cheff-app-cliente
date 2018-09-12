@@ -57,20 +57,21 @@
           <div class="col-8">
             <div class="row">
               <div class="col-4 container-img-sacola">
-                <img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">
+                <img class="img-carrinho" src="assets/imgs/image_default.png" alt="">
               </div>
               <div class="col-8">
                 <span class="valor-produto-carrinho">
-                  <b>{{ item.ItemName }}</b> <br>
-                  Unit: {{ GlobalsService.getCurrency(item.ItemValor)  }} <br>
-                  Total: R$ {{ GlobalsService.getCurrency(item.ItemValor * item.ItemQTD) }}
+                  <b>{{ item.descricao }}</b> <br>
+                  Unit: {{ GlobalsService.getCurrency(item.vl_unit)  }} <br>
+                  Total: R$ {{ GlobalsService.getCurrency(item.vl_unit * item.qtd) }} <br>
+                  Obs: {{ item.obs }}
                 </span>
               </div>
             </div>
           </div>
           <div class="col-2 col-sm-2 col-md-2 col-lg-3 col-xl-3 container-qtd-produto">
             <button (click)="subtrai(i)" class="del">-</button>
-            <input id="number2" type="number" [value]=item.ItemQTD min="1">
+            <input id="number2" type="number" [value]=item.qtd min="1">
             <button (click)="soma(i)" class="add">+</button>
           </div>
           <div class="col-2 col-sm-4 col-md-4 col-lg-4 col-xl-4">
@@ -88,8 +89,8 @@
       <div class="col-12 container-branco container-botoes">
         <div class="row">
           <div class="col-8">
-            <button type="submit" class="btn-block btn-ver-cardapio" disabled *ngIf="CarrinhoProvider.itensCart.length === 0"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Fazer Pedido</button>
-            <button type="submit" (click)="confirmaPedido()" class="btn-block btn-ver-cardapio" *ngIf="this.CarrinhoProvider.itensCart.length > 0"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Fazer Pedido</button>
+            <button ion-button (click)="CarrinhoProvider.enviaPedido(CarrinhoProvider.totalCart, CarrinhoProvider.itensCart)" class="btn-block btn-ver-cardapio" disabled *ngIf="CarrinhoProvider.itensCart.length === 0"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Fazer Pedido</button>
+            <button ion-button (click)="CarrinhoProvider.enviaPedido(CarrinhoProvider.totalCart, CarrinhoProvider.itensCart)" class="btn-block btn-ver-cardapio" *ngIf="this.CarrinhoProvider.itensCart.length > 0"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Fazer Pedido</button>
           </div>
           <div class="col-4">
             <button (click)="esvaziarCarrinho()" type="submit" class="btn-block btn-ver-cardapio btn-imprimir btn-cancelar" disabled *ngIf="CarrinhoProvider.itensCart.length === 0"><img src="assets/imgs/icons/cancel-white.png" alt=""></button>

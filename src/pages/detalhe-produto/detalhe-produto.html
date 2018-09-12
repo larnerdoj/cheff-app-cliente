@@ -64,8 +64,8 @@
             <div class="row">
               <form #form="ngForm" (ngSubmit)="addItemCarrinho(arDetalhesProduto, form)" class="col-6">
                 <div>
-                  <button type="submit" class="add-carrinho" disabled *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
-                  <button type="submit" class="add-carrinho" *ngIf="this.arDetalhesProduto.sts === 'DISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
+                  <button ion-button class="add-carrinho" disabled *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
+                  <button ion-button class="add-carrinho" *ngIf="this.arDetalhesProduto.sts === 'DISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
                   <input id="number-hidden" type="hidden" name="qtdProduto" [(ngModel)]="qtdProduto" min="1">
                 </div>
               </form>
@@ -91,22 +91,27 @@
       <div class="col-12 container-branco" *ngIf="this.arDetalhesProduto.descr">
         <p class="descricao-produto">
           <b>Ingredientes:</b>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta excepturi expedita harum magnam maiores numquam optio, repellat similique temporibus ul!
+          {{ this.arDetalhesProduto.ingr }}
         </p>
       </div>
       <div class="col-12 container-branco container-branco-bottom container-branco-bottom-no-margin" *ngIf="this.arDetalhesProduto.prepar != 'NULL' && this.arDetalhesProduto.prepar != null && this.arDetalhesProduto.prepar != ''">
         <p class="descricao-produto">
-          <ion-icon name="ios-timer-outline"></ion-icon> 20 minutos
+          <ion-icon name="ios-timer-outline"></ion-icon> {{ this.arDetalhesProduto.prepar }}
         </p>
       </div>
       <div class="col-12 container-branco container-botoes">
         <div class="row" *ngIf="arDetalhesProduto">
           <div class="col-8">
-            <button type="submit" class="btn-block btn-ver-cardapio" disabled *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Adicionar</button>
-            <button type="submit" class="btn-block btn-ver-cardapio" *ngIf="this.arDetalhesProduto.sts === 'DISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Adicionar</button>
+            <form #form="ngForm" (ngSubmit)="addItemCarrinho(arDetalhesProduto, form)">
+              <div>
+                <button ion-button class="btn-block btn-ver-cardapio" disabled *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Adicionar</button>
+                <button ion-button class="btn-block btn-ver-cardapio" *ngIf="this.arDetalhesProduto.sts === 'DISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Adicionar</button>
+                <input id="number-hidden-2" type="hidden" name="qtdProduto" [(ngModel)]="qtdProduto" min="1">
+              </div>
+            </form>
           </div>
           <div class="col-4">
-            <button type="submit" class="btn-block btn-ver-cardapio btn-imprimir" disabled *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'"><img src="assets/imgs/icons/print-white.png" alt=""></button>
+            <button ion-button class="btn-block btn-ver-cardapio btn-imprimir" disabled *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'"><img src="assets/imgs/icons/print-white.png" alt=""></button>
             <button ion-button (click)="preparaPedido()" class="btn-block btn-ver-cardapio btn-imprimir" *ngIf="this.arDetalhesProduto.sts === 'DISPONIVEL'"><img src="assets/imgs/icons/print-white.png" alt=""></button>
           </div>
         </div>

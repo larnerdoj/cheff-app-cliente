@@ -11,6 +11,9 @@ import { Injectable } from '@angular/core';
 import {AlertController, LoadingController} from 'ionic-angular';
 import {HttpService} from "./http";
 import {StorageService} from "./storage";
+import {GlobalsService} from "./globals";
+import {DatePipe} from "@angular/common";
+import {CardapioPage} from "../pages/cardapio/cardapio";
 
 @Injectable()
 export class CarrinhoProvider {
@@ -20,12 +23,15 @@ export class CarrinhoProvider {
   totalCart: number = 0;
   taxaEntrega: number = 0;
   private qtd: string;
+  obs: string;
 
   constructor(
     public AlertController: AlertController,
     public LoadingController: LoadingController,
+    public DatePipe: DatePipe,
     private HttpService: HttpService,
-    private StorageService: StorageService
+    private StorageService: StorageService,
+    private GlobalsService: GlobalsService
   ) {}
 
   /***************
@@ -33,15 +39,30 @@ export class CarrinhoProvider {
    ***************/
   addCart(item, qtd:number){
 
-    this.itensCart.push(
-      {
-      'ItemId': item.id,
-      'ItemValor': item.valor,
-      'ItemQTD': qtd,
-      'ItemName': item.descricao,
-      //'ItemDescricao': item.ItemDescricao,
-      'ItemPhoto': item.ItemPhoto
+    this.itensCart.push({
+      id: item.id,
+      codigo: (item.code) ? item.code : item.codigo,
+      descricao: (item.name) ? item.name : item.descricao,
+      categoria: item.categoria,
+      qtd: qtd,
+      vl_unit: (item.vl_venda) ? item.vl_venda : item.valor,
+      is_promotion: item.is_promotion,
+      vl_promotion: item.vl_promotion,
+      vl_rate_promotion: item.vl_promotion,
+      print_item: `${item.print_item}/${item.print_ip}`,
+      photo: item.photo,
+      obs: item.obs
     });
+
+    // this.itensCart.push(
+    //   {
+    //   'ItemId': item.id,
+    //   'ItemValor': item.valor,
+    //   'ItemQTD': qtd,
+    //   'ItemName': item.descricao,
+    //   //'ItemDescricao': item.ItemDescricao,
+    //   'ItemPhoto': item.ItemPhoto
+    // });
     this.calculaCarrinho();
 
     let alert = this.AlertController.create({
@@ -73,7 +94,7 @@ export class CarrinhoProvider {
    ***************/
   calculaCarrinho(){
     this.totalCart = 0;
-    return this.itensCart.forEach(s => this.totalCart += (s.ItemValor * s.ItemQTD));
+    return this.itensCart.forEach(s => this.totalCart += (s.vl_unit * s.qtd));
   }
 
   /***************
@@ -102,12 +123,18 @@ export class CarrinhoProvider {
   addCartViewProduto(item, qtd:number){
     this.itensCart.push(
       {
-        'ItemId': item.id,
-        'ItemValor': item.vl_venda,
-        'ItemQTD': qtd,
-        'ItemName': item.name,
-        //'ItemDescricao': item.desc,
-        'ItemPhoto': item.photo
+        id: item.id,
+        codigo: (item.code) ? item.code : item.codigo,
+        descricao: (item.name) ? item.name : item.descricao,
+        categoria: item.categoria,
+        qtd: qtd,
+        vl_unit: (item.vl_venda) ? item.vl_venda : item.valor,
+        is_promotion: item.is_promotion,
+        vl_promotion: item.vl_promotion,
+        vl_rate_promotion: item.vl_promotion,
+        print_item: `${item.print_item}/${item.print_ip}`,
+        photo: item.photo,
+        obs: item.obs
       });
     this.calculaCarrinho();
 
@@ -136,7 +163,7 @@ export class CarrinhoProvider {
         {
           name: 'qtd',
           placeholder: 'Digite a quantidade',
-          type: 'number',
+          type: 'tel',
           value: this.qtd
         },
       ],
@@ -148,7 +175,37 @@ export class CarrinhoProvider {
         {
           text: 'Ok',
           handler: (res) => {
-            this.addCart(item, res.qtd)
+
+            let alert = this.AlertController.create({
+              title: 'Observações',
+              message: `Deseja enviar alguma observação para o item ${item.descricao}?`,
+              inputs: [
+                {
+                  name: 'obs',
+                  placeholder: 'Digite a observação',
+                  type: 'text',
+                  value: this.obs
+                },
+              ],
+              buttons: [
+                {
+                  text: 'Nenhuma Observação',
+                  handler: () => {
+                    this.addCart(item, res.qtd);
+                  }
+                },
+                {
+                  text: 'Enviar',
+                  handler: (resObs) => {
+                    item.obs = resObs.obs;
+                    console.log(resObs.obs);
+                    console.log(item.obs);
+                    this.addCart(item, res.qtd);
+                  }
+                }
+              ]
+            });
+            alert.present();
           }
         }
       ]
@@ -186,10 +243,11 @@ export class CarrinhoProvider {
                 content: 'Enviando Pedido'
               });
               loading.present().then(() => {
-                this.HttpService.JSON_POST(`/comandas/${this.StorageService.getItem('idComanda')}/itens/${this.StorageService.getItem('idAtendente')}`, objPost, false, true, 'json')
+                this.HttpService.JSON_POST(`/comandas/${this.StorageService.getItem('idComanda')}/itens/${this.StorageService.getItem('userId')}`, objPost, false, true, 'json')
                   .then(
                     (res)=> {
                       console.log(res.json());
+                      this.enviaImpressao(total, itens);
                       loading.dismiss();
                     },
                     (error) => {
@@ -205,58 +263,71 @@ export class CarrinhoProvider {
       alert.present();
   }
 
-  enviaImpressao(itens) {
+  enviaImpressao(total, itens) {
+    let i;
+    let countItens = 0;
+    for(i=0;i<itens.length;i++){
 
+      //VERIFICANDO SALDO DO CLIENTE
+      let saldoCliente;
+      if(Number(this.StorageService.getItem('credit')) - total <= 0){
+        saldoCliente = 0;
+      }else{
+        saldoCliente = Number((Number(this.StorageService.getItem('credit')) - total).toFixed(2));
+      }
+
+      let print_item;//IMPRESSORA DO ITEM
+      print_item = itens[i].print_item;
+
+      let itemImpressao = {};
+      itemImpressao['CONFIG'] = {};
+      itemImpressao['CONFIG']['qtd_vias'] = 2;
+
+      itemImpressao['Header'] = this.StorageService.getItem('nomeComanda');
+
+      itemImpressao['Content'] = {};
+      itemImpressao['Content'][0] = `MESA ${this.StorageService.getItem('mesa')} / ${this.StorageService.getItem('nomeComanda')}`;
+      itemImpressao['Content'][3] = itens[i].categoria;
+      itemImpressao['Content'][1] = `(${itens[i].qtd}x) - ${itens[i].descricao}`;
+      itemImpressao['Content'][2] = itens[i].obs;
+
+      let vlTotal;
+      if(itens[i].is_promotion === 1){
+        vlTotal = itens[i].qtd * itens[i].vl_promotion;
+      }else{
+        vlTotal = itens[i].qtd * itens[i].vl_unit;
+      }
+
+      itemImpressao['Footer'] = {};
+      itemImpressao['Footer'][0] = this.GlobalsService.getCurrency((vlTotal).toFixed(2));
+      itemImpressao['Footer'][1] = this.GlobalsService.getCurrency(saldoCliente);
+      itemImpressao['Footer'][2] = this.StorageService.getItem('atendente');
+      itemImpressao['Footer'][3] = this.DatePipe.transform(Date.now(), 'dd/MM/yyyy, H:mm');
+
+      countItens++;
+
+      this.HttpService.JSON_POST(`/impressao/item-comanda/${print_item}`, itemImpressao, false, true, 'json')
+        .then(
+          (res) => {
+
+          },
+          (error) => {
+            this.AlertController.create({
+              title: 'Erro',
+              message: error._body
+            }).present();
+          })
+
+      if(countItens===itens.length){
+        //this.NavController.setRoot(CardapioPage, {}, { animate: true, direction: 'back' });
+        this.AlertController.create({
+          title: 'Enviado',
+          message: 'Seu pedido foi enviado para o preparo!'
+        }).present();
+        this.itensCart = [];
+        this.calculaCarrinho();
+      }
+
+    }
   }
-
-  // let alert = this.alertCtrl.create({
-  //   title: 'Enviar pedido?',
-  //   message: 'Confirme seu pedido para inciar o preparo!',
-  //   buttons: [
-  //     {
-  //       text: 'Cancelar',
-  //       role: 'cancel',
-  //       handler: () => {}
-  //     },
-  //     {
-  //       text: 'Enviar',
-  //       handler: () => {
-  //
-  //         Promise.resolve(this.calculaTotal())
-  //           .then(() => {
-  //
-  //             //CRIANDO OBJETO COM TOTAL
-  //             let objPost = [{
-  //               total: this.totalPedido,
-  //               itens: this.itensComanda
-  //             }];
-  //
-  //             //EXECUTA JSON
-  //             let loading = this.LoadingController.create({
-  //               spinner: 'crescent',
-  //               content: 'Enviando pedido'
-  //             });
-  //             loading.present().then(() => {
-  //
-  //               this.HttpService.JSON_POST(`/comandas/${this.itemCarregado.id}/itens/${this.StorageService.getItem('i')}`, objPost, false, true, 'json')
-  //                 .then(
-  //                   (res) => {
-  //                     this.enviaImpressao();
-  //                     loading.dismiss();
-  //                   },
-  //                   (error) => {
-  //                     loading.dismiss();
-  //                     this.AlertService.showAlert('ERRO', JSON.parse(error._body));
-  //                   }
-  //                 )
-  //
-  //             });
-  //
-  //           })
-  //
-  //       }
-  //     }
-  //   ]
-  // });
-  // alert.present();
 }

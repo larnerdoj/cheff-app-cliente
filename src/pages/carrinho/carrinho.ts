@@ -92,12 +92,13 @@ export class CarrinhoPage {
   }
 
   soma(index) {
-    this.CarrinhoProvider.itensCart[index].ItemQTD++;
+    this.CarrinhoProvider.itensCart[index].qtd++;
     this.CarrinhoProvider.calculaCarrinho();
+    console.log(index);
   }
 
   subtrai(index) {
-    (this.CarrinhoProvider.itensCart[index].ItemQTD === 1) ? this.CarrinhoProvider.itensCart[index].ItemQTD = 1 : this.CarrinhoProvider.itensCart[index].ItemQTD--;
+    (this.CarrinhoProvider.itensCart[index].qtd === 1) ? this.CarrinhoProvider.itensCart[index].qtd = 1 : this.CarrinhoProvider.itensCart[index].qtd--;
     this.CarrinhoProvider.calculaCarrinho();
   }
 
