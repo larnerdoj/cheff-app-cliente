@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {ProdutosPage} from "../produtos/produtos";
 import {GlobalsService} from "../../providers/globals";
 import {StorageService} from "../../providers/storage";
@@ -29,7 +29,8 @@ export class DetalheProdutoPage {
     public StorageService: StorageService,
     private GlobalsService: GlobalsService,
     public CarrinhoProvider: CarrinhoProvider,
-    public AlertController: AlertController
+    public AlertController: AlertController,
+    public LoadingController: LoadingController
   ) {
 
   }
@@ -42,16 +43,26 @@ export class DetalheProdutoPage {
     /***************
      GERA O ARRAY COM OS DETALHES DO PRODUTO
      ***************/
-    this.HttpService.JSON_GET(`/produtos/${this.strIdProduto}/${this.GlobalsService.strEmpresa}`, false,true, 'json')
-      .then(
-        (res) => {
-          console.log(res.json());
-          this.arDetalhesProduto = res.json();
+
+      //LOADING
+    let loading = this.LoadingController.create({
+      spinner: 'crescent',
+      content: 'Carregando Produto'
+    });
+    loading.present().then(() => {
+      this.HttpService.JSON_GET(`/produtos/${this.strIdProduto}/${this.GlobalsService.strEmpresa}`, false, true, 'json')
+        .then(
+          (res) => {
+            console.log(res.json());
+            this.arDetalhesProduto = res.json();
+            loading.dismiss();
+          }
+        ),
+        (error) => {
+          console.log(error);
+          loading.dismiss();
         }
-      ),
-      (error) => {
-        console.log(error);
-      }
+    });
   }
 
   /***************

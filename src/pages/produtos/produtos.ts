@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {DetalheProdutoPage} from "../detalhe-produto/detalhe-produto";
 import {HttpService} from "../../providers/http";
 import {GlobalsService} from "../../providers/globals";
@@ -27,28 +27,39 @@ export class ProdutosPage {
     private GlobalsService: GlobalsService,
     private StorageService: StorageService,
     public CarrinhoProvider: CarrinhoProvider,
-    public AlertController: AlertController
+    public AlertController: AlertController,
+    public LoadingController: LoadingController
   ) {
   }
 
   ionViewDidLoad() {
-    // CAPTURA O ID E NOME DA CATEGORIA RECEBIDOS DA PAGINA CARDÁPIO
     this.categoriaId = this.navParams.get("id");
     this.categoriaNome = this.navParams.get("categoria");
+    // CAPTURA O ID E NOME DA CATEGORIA RECEBIDOS DA PAGINA CARDÁPIO
+
     //console.log(this.categoriaNome);
     /***************
      GERA O ARRAY COM TODOS OS PRODUTOS DA CATEGORIA
      ***************/
-    this.HttpService.JSON_GET(`/produtos/${this.GlobalsService.strEmpresa}/comanda/${this.categoriaId}`, false, true, 'json')
-    .then(
-        (res) => {
-          console.log(res.json());
-          this.arListaProdutos = res.json();
+      //LOADING
+    let loading = this.LoadingController.create({
+        spinner: 'crescent',
+        content: 'Carregando Produtos'
+      });
+    loading.present().then(() => {
+      this.HttpService.JSON_GET(`/produtos/${this.GlobalsService.strEmpresa}/comanda/${this.categoriaId}`, false, true, 'json')
+        .then(
+          (res) => {
+            console.log(res.json());
+            this.arListaProdutos = res.json();
+            loading.dismiss();
+          }
+        ),
+        (error) => {
+          console.log(error);
+          loading.dismiss();
         }
-      ),
-      (error) => {
-        console.log(error);
-      }
+    });
   }
 
   /***************

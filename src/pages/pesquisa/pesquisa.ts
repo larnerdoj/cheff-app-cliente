@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {GlobalsService} from "../../providers/globals";
 import {StorageService} from "../../providers/storage";
 import {CarrinhoProvider} from "../../providers/carrinho";
@@ -31,7 +31,8 @@ export class PesquisaPage {
     private GlobalsService: GlobalsService,
     private StorageService: StorageService,
     private HttpService: HttpService,
-    private CarrinhoProvider: CarrinhoProvider
+    private CarrinhoProvider: CarrinhoProvider,
+    public LoadingController: LoadingController
   ) {
   }
 
@@ -39,17 +40,26 @@ export class PesquisaPage {
     /****
      PESQUISA NA API E RETORNA OS PRODUTOS
      *****/
-    this.HttpService.JSON_GET(`/produtos/${this.GlobalsService.strEmpresa}/comanda`, false, true, 'json')
-      .then(
-        (res) => {
-          console.log(res.json());
-          this.itens = res.json();
-          this.itensFull = res.json();
-        }
-      ),
-      (error) => {
+      //LOADING
+    let loading = this.LoadingController.create({
+        spinner: 'crescent',
+        content: 'Carregando Produtos'
+      });
+    loading.present().then(() => {
+      this.HttpService.JSON_GET(`/produtos/${this.GlobalsService.strEmpresa}/comanda`, false, true, 'json')
+        .then(
+          (res) => {
+            console.log(res.json());
+            this.itens = res.json();
+            this.itensFull = res.json();
+            loading.dismiss();
+          }
+        ),
+        (error) => {
           console.log(error);
-      }
+          loading.dismiss();
+        }
+    });
   }
 
   /***************
