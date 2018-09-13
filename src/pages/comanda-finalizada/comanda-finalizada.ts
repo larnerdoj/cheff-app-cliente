@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {GlobalsService} from "../../providers/globals";
 
 @IonicPage()
 @Component({
@@ -8,7 +9,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ComandaFinalizadaPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private GlobalsService: GlobalsService
+  ) {
   }
 
   ionViewDidLoad() {

@@ -7,7 +7,7 @@
 <ion-header>
 
   <div *ngIf="arDetalhesProduto">
-    <img *ngIf="this.arDetalhesProduto.photo === null" class="img-header" src="assets/imgs/backs/01.png" alt="backgrounds">
+    <img *ngIf="this.arDetalhesProduto.photo === null" class="img-header" [src]="this.GlobalsService.bgDefault" alt="backgrounds">
   </div>
   <ion-navbar>
     <div class="container container-topo-app">

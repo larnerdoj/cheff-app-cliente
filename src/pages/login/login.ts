@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import {CardapioPage} from "../cardapio/cardapio";
 //import {ErrorTokenPage} from "../error-token/error-token";
 import {HttpService} from "../../providers/http";
@@ -25,7 +26,8 @@ export class LoginPage {
     //private authServiceProvider: AuthServiceProvider
     private HttpService: HttpService,
     private GlobalsService: GlobalsService,
-    private StorageService: StorageService
+    private StorageService: StorageService,
+    private qrScanner: QRScanner
   ) {
   }
 
@@ -42,14 +44,14 @@ export class LoginPage {
     this.HttpService.JSON_GET(`/comandas/mobile/login/token/${form.value.strToken}/${this.GlobalsService.strEmpresa}`, false, true, 'json')
       .then(
         (res) =>{
-          console.log(res.json());
+          //console.log(res.json());
           if (res.json() === 'Comanda não encontrada!') {
             this.navCtrl.push(ErrorTokenPage);
             setTimeout(() => {
               this.navCtrl.push(LoginPage, { animate: true, direction: 'back' })
             }, 5000);
           }else {
-            console.log(res.json());
+            //console.log(res.json());
             this.StorageService.setItem('isLogged', true);
             this.StorageService.setItem('nomeComanda', res.json().name);
             this.StorageService.setItem('codigoComanda', res.json().code);
@@ -70,6 +72,37 @@ export class LoginPage {
           this.navCtrl.push(ErrorTokenPage);
         }
       )
+  }
+
+  getQRCode() {
+    this.qrScanner.prepare()
+      .then((status: QRScannerStatus) => {
+        if (status.authorized) {
+          // camera permission was granted
+
+
+          // start scanning
+          let scanSub = this.qrScanner.scan().subscribe((text: string) => {
+            console.log('Scanned something', text);
+
+            this.qrScanner.hide(); // hide camera preview
+            scanSub.unsubscribe(); // stop scanning
+
+            let form = {};
+            form['value'] = {};
+            form['value']['strToken'] = text;
+            this.getLogin(form);
+          });
+
+        } else if (status.denied) {
+          // camera permission was permanently denied
+          // you must use QRScanner.openSettings() method to guide the user to the settings page
+          // then they can grant the permission from there
+        } else {
+          // permission was denied, but not permanently. You can ask for permission again at a later time.
+        }
+      })
+      .catch((e: any) => console.log('Error is', e));
   }
 
 }

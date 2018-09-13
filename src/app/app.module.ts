@@ -11,6 +11,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule, LOCALE_ID, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
+import { Camera } from '@ionic-native/camera';
+import { QRScanner } from '@ionic-native/qr-scanner';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpModule } from '@angular/http';
@@ -104,7 +106,9 @@ import {PesquisaPage} from "../pages/pesquisa/pesquisa";
     HttpService,
     GlobalsService,
     StorageService,
-    CarrinhoProvider
+    CarrinhoProvider,
+    Camera,
+    QRScanner
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

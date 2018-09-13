@@ -28,6 +28,7 @@ export class GlobalsService {
     arPesquisa: Array<any>;
     resultadoPesquisa: string;
     arResultadoPesquisa: Array<any>;
+    bgDefault: string;
 
     constructor(
         public DomSanitizer: DomSanitizer,
@@ -39,14 +40,7 @@ export class GlobalsService {
 
     //GERANDO IMAGEM ALEATORIA
     getImgRandom() {
-        return `assets/imgs/backs/0${Math.floor(Math.random() * (5 - + 1)) + 1}.png`;
-    }
-
-    logout() {
-      this.StorageService.setItem('isLogged', false);
-      this.StorageService.setItem('nomeComanda', '');
-      this.StorageService.setItem('codigoComanda', '');
-      this.rootPage = LoginPage;
+      this.bgDefault = `assets/imgs/backs/0${Math.floor(Math.random() * (4 - + 1)) + 1}.png`;
     }
 
     getCurrency(amount: number) {

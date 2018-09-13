@@ -10,6 +10,13 @@
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <img src="../assets/imgs/icons/{{ p.icon }}" alt="">{{p.title}}
       </button>
+
+      <button menuClose ion-item (click)="logout()">
+        <img src="../assets/imgs/icons/cancel-white.png" alt="">Logout
+      </button>
+      <button menuClose ion-item (click)="exitApp()">
+        <img src="../assets/imgs/icons/cancel-white.png" alt="">Fechar o App
+      </button>
     </ion-list>
   </ion-content>
 

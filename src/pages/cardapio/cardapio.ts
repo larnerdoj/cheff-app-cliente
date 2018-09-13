@@ -21,6 +21,7 @@ export class CardapioPage {
   strNomeCliente: string;
   strNumberToken: string;
   arListaCategorias: Array<any>;
+  arInsumos = [ 'Palitos', 'Guardanapos', 'Condimentos' ]
 
   constructor(
     public navCtrl: NavController,
@@ -81,6 +82,113 @@ export class CardapioPage {
    ***************/
   pesquisar() {
     this.navCtrl.push(PesquisaPage);
+  }
+
+  limparMesa() {
+    let alertConfirm = this.AlertController.create({
+      title: 'Confirmação de Limpeza',
+      message: `Deseja realmente solicitar a limpeza?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {}
+        },
+        {
+          text: 'Limpar Mesa',
+          handler: (res) => {
+            this.HttpService.JSON_POST(`/impressao/limpar-mesa/ELGIN-1/null`, {mesa: this.StorageService.getItem('mesa'), cliente: this.StorageService.getItem('nomeComanda')}, false, true, 'json')
+              .then(
+                (res) => {
+                  let alert = this.AlertController.create({
+                    title: 'Limpeza da Musa',
+                    message: `Sua mesa sera limpa em breve!`,
+                    buttons: [
+                      {
+                        text: 'Ok',
+                        handler: (res) => {
+                          return true;
+                        }
+                      }
+                    ]
+                  });
+                  alert.present();
+                }, (error) => {
+                  console.log(error);
+                }
+              )
+          }
+        }
+      ]
+    });
+    alertConfirm.present();
+  }
+
+  reporInsumos() {
+    let alert = this.AlertController.create();
+    alert.setTitle('Quais Insumos Estão Faltando Na Sua Mesa?');
+
+    for(let i = 0; i < this.arInsumos.length; i++) {
+      alert.addInput({
+        type: 'checkbox',
+        label: this.arInsumos[i],
+        value: this.arInsumos[i],
+      });
+    }
+
+    alert.addButton('Cancelar');
+    alert.addButton({
+      text: 'Solicitar Insumo(s)',
+      handler: data => {
+        this.HttpService.JSON_POST(`/impressao/insumos/ELGIN-1/null`, {mesa: this.StorageService.getItem('mesa'), cliente: this.StorageService.getItem('nomeComanda'), insumos: data.toString()}, false, true, 'json')
+          .then(
+            (res) => {
+              let alert = this.AlertController.create({
+                title: 'Solicitação de Insumo',
+                message: `Em breve você receberá o insumo solicitado na sua mesa!`,
+                buttons: [
+                  {
+                    text: 'Ok',
+                    handler: (res) => {
+                      return true;
+                    }
+                  }
+                ]
+              });
+              alert.present();
+            }, (error) => {
+              console.log(error);
+            }
+          )
+      }
+    });
+    alert.present();
+  }
+
+  chamarGarcon() {
+    let alertConfirm = this.AlertController.create({
+      title: 'Chamada de Garçon',
+      message: `Deseja realmente chamar o garçon?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {}
+        },
+        {
+          text: 'Chamar Garçon',
+          handler: (res) => {
+            this.HttpService.JSON_POST(`/comandas/painel`, {mesa: this.StorageService.getItem('mesa'), atendente: this.StorageService.getItem('atendente')}, false, true, 'json')
+              .then(
+                (res) => {
+                  return true
+                }, (error) => {
+                  console.log(error);
+                }
+              )
+          }
+        }
+      ]
+    });
+    alertConfirm.present();
   }
 
 }

@@ -55,49 +55,59 @@ export class CheffCliente {
     public splashScreen: SplashScreen,
     private GlobalsService: GlobalsService,
     private StorageService: StorageService,
-    public CarrinhoProvider: CarrinhoProvider
+    public CarrinhoProvider: CarrinhoProvider,
+    public AlertController: AlertController
   ) {
     this.initializeApp();
 
     this.pages = [
       { icon: 'menu.png', title: 'Cardapio', component: CardapioPage },
-      { icon: 'shopping-bag-white.png', title: 'Carrinho', component: CarrinhoPage },
-      { icon: 'cancel-white.png', title: 'Sair do App', component: LoginPage }
+      { icon: 'shopping-bag-white.png', title: 'Carrinho', component: CarrinhoPage }
     ];
 
     //CRIACÃO DA VÁRIAVEL DE LOGGED, MANTEM O USUÁRIO LOGADO ATÉ A COMANDA SER FINALIZADA
-    (this.StorageService.getItem('isLogged') === 'true') ? this.rootPage = CardapioPage : this.rootPage = LoginPage;
+    if (this.StorageService.getItem('isLogged') === 'true')  {
+      this.GlobalsService.getImgRandom();
+      this.rootPage = CardapioPage;
+    } else {
+      this.GlobalsService.getImgRandom();
+      this.rootPage = LoginPage;
+    }
 
     /***************
      VERIFICA VIA NUMERO DO TOKEN A CADA 10 SEGUNDOS SE A COMANDA ESTA ABERTA
      SE ESTIVER FECHADA ELE LIMPA AS VARIAVEIS DE STORAGE E ENVIA O USUÁRIO PARA A PÁGINA DE COMANDA FINALIZADA
      ***************/
-    setInterval(() => {
-      this.HttpService.JSON_GET(`/comandas/mobile/login/token/${this.StorageService.getItem('codigoComanda')}/${this.GlobalsService.strEmpresa}`, false, true, 'json')
-        .then(
-        (res) =>{
-            //console.log(res.json());
-            if (res.json() === 'Comanda não encontrada!') {
-              this.rootPage = ComandaFinalizadaPage;
-              this.StorageService.setItem('isLogged', false);
-              this.StorageService.setItem('nomeComanda', '');
-              this.StorageService.setItem('codigoComanda', '');
-              this.StorageService.setItem('idComanda', '');
-              this.StorageService.setItem('userId', '');
-              setTimeout(() => {
-                this.rootPage = LoginPage;
-              }, 5000);
+    if (this.StorageService.getItem('codigoComanda') == null || this.StorageService.getItem('codigoComanda') == 'null' || this.StorageService.getItem('codigoComanda') == undefined || this.StorageService.getItem('codigoComanda') == 'undefined' || this.StorageService.getItem('codigoComanda') == '') {
+      this.rootPage = LoginPage;
+    } else {
+      setInterval(() => {
+        this.HttpService.JSON_GET(`/comandas/mobile/login/token/${this.StorageService.getItem('codigoComanda')}/${this.GlobalsService.strEmpresa}`, false, true, 'json')
+          .then(
+            (res) =>{
+              //console.log(res.json());
+              if (res.json() === 'Comanda não encontrada!') {
+                this.rootPage = ComandaFinalizadaPage;
+                this.StorageService.setItem('isLogged', false);
+                this.StorageService.setItem('nomeComanda', '');
+                this.StorageService.setItem('codigoComanda', '');
+                this.StorageService.setItem('idComanda', '');
+                this.StorageService.setItem('userId', '');
+                setTimeout(() => {
+                  this.rootPage = LoginPage;
+                }, 5000);
+                //console.log("Passou aqui!");
+              }
+
+            },
+            (error) =>{
+              //console.log(error);
+              this.rootPage = LoginPage;
               //console.log("Passou aqui!");
             }
-
-        },
-        (error) =>{
-          //console.log(error);
-          this.rootPage = LoginPage;
-          //console.log("Passou aqui!");
-        }
-      )
-    }, 10000);
+          )
+      }, 10000);
+    }
 
     //console.log(this.CarrinhoProvider.itensCart);
   }
@@ -111,6 +121,50 @@ export class CheffCliente {
 
   openPage(page) {
     this.nav.setRoot(page.component);
+  }
+
+  logout() {
+    let alert = this.AlertController.create({
+      title: 'Logout',
+      message: `Deseja fazer logout do APP?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {}
+        },
+        {
+          text: 'Logout',
+          handler: (res) => {
+            this.StorageService.clear();
+
+            this.GlobalsService.getImgRandom();
+            this.rootPage = LoginPage;
+            this.nav.setRoot(LoginPage, {}, { animate: true, direction: 'forward' });
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  exitApp() {
+    let alert = this.AlertController.create({
+      title: 'Sair',
+      message: `Deseja fechar o APP?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {}
+        },
+        {
+          text: 'Sair',
+          handler: (res) => {
+            this.platform.exitApp();
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 }

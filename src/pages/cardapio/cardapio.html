@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <img class="img-header" [src]="this.GlobalsService.getImgRandom()" alt="backgrounds">
+  <img class="img-header" [src]="this.GlobalsService.bgDefault" alt="backgrounds">
   <ion-navbar>
     <div class="container container-topo-app">
       <div class="row">
@@ -58,7 +58,9 @@
             <a (click)="detalheCategoria(idCategoria)">{{ idCategoria.categoria }} <ion-icon name="ios-arrow-forward"></ion-icon></a>
           </li>
         </ul>
-        <button (click)="GlobalsService.desenvolvimento()" class="btn-block btn-ver-cardapio btn-limpar-mesa"><img src="assets/imgs/icons/table.png" class="img-fluid icon-cardapio" alt="">Limpar Mesa</button>
+        <button ion-button (click)="limparMesa()" class="btn-block btn-ver-cardapio btn-limpar-mesa"><img src="assets/imgs/icons/table.png" class="img-fluid icon-cardapio" alt="">Limpar Mesa</button>
+        <button ion-button (click)="reporInsumos()" class="btn-block btn-ver-cardapio btn-limpar-mesa"><img src="assets/imgs/icons/cocktail-shaker.png" class="img-fluid icon-cardapio" alt="">Repor Insumos</button>
+        <button ion-button (click)="chamarGarcon()" class="btn-block btn-ver-cardapio btn-limpar-mesa"><img src="assets/imgs/icons/restaurant-pickup.png" class="img-fluid icon-cardapio" alt="">Chamar Garçom</button>
       </div>
     </div>
   </div>
