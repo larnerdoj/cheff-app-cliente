@@ -4,29 +4,21 @@ page-login {
   }
   ::-webkit-input-placeholder {
     color: #3c4858;
-    font-weight: 900;
-    text-transform: uppercase;
     font-size: 20px;
   }
 
   :-moz-placeholder { /* Firefox 18- */
     color: #3c4858;
-    font-weight: 900;
-    text-transform: uppercase;
     font-size: 20px;
   }
 
   ::-moz-placeholder {  /* Firefox 19+ */
     color: #3c4858;
-    font-weight: 900;
-    text-transform: uppercase;
     font-size: 20px;
   }
 
   :-ms-input-placeholder {
     color: #3c4858;
-    font-weight: 900;
-    text-transform: uppercase;
     font-size: 20px;
   }
   #ion-diagnostics-toast {
@@ -71,7 +63,6 @@ page-login {
         padding-left: 20px;
         color: #3c4858;
         font-weight: 900;
-        text-transform: uppercase;
         font-size: 20px;
       }
       button {

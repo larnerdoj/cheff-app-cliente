@@ -21,12 +21,12 @@
             Digite seu token
           </div>
           <div class="col-12 no-padding">
-            <form #form="ngForm" (ngSubmit)="getLogin(form)">
+            <form #form="ngForm">
               <div class="col-12 input-login">
-                <input type="text" name="strToken" ngModel placeholder="Digite o Token">
+                <input type="text" name="strToken" [(ngModel)]="qrCodeTxt" placeholder="Digite o Token" required>
               </div>
               <button ion-button (click)="getQRCode()" class="btn-code"><img src="assets/imgs/icons/qr-code.png" alt=""></button>
-              <button ion-button type="submit" class="btn-block btn-ver-cardapio"><img src="assets/imgs/icons/menu.png" class="img-fluid icon-cardapio" alt="">Ver Cardápio</button>
+              <button ion-button (click)="getLogin(form)" type="submit" class="btn-block btn-ver-cardapio"><img src="assets/imgs/icons/menu.png" class="img-fluid icon-cardapio" alt="">Ver Cardápio</button>
             </form>
           </div>
         </div>
