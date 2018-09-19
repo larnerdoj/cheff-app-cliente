@@ -45,13 +45,13 @@
 
 
 <ion-content padding>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 container-branco">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12 class="container-branco">
         <h2 class="title-categorias text-center">{{ categoriaNome }}</h2>
         <h3 class="subtitle-categorias text-center">Monte o seu pedido:</h3>
-        <ul class="lista-produtos row">
-          <li *ngFor="let produto of arListaProdutos" class="col-6">
+        <ion-list ion-row no-lines class="lista-produtos">
+          <button ion-item *ngFor="let produto of arListaProdutos" col-6 (click)="itemSelected(item)">
             <img src="assets/imgs/image_default.png" (click)="detalheProduto(produto)" alt="">
             <div class="descricao">
               <h2 class="title-produto">{{ produto.descricao }}</h2>
@@ -60,7 +60,25 @@
               <span *ngIf="produto.status == 'INDISPONIVEL'" class="indisponivel">Indisponível</span>
               <button ion-button *ngIf="produto.status == 'DISPONIVEL'" (click)="this.CarrinhoProvider.addItemCarrinho(produto)"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
             </div>
-          </li>
+          </button>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!--<div class="container">-->
+    <!--<div class="row">-->
+      <!--<div class="col-12 container-branco">-->
+        <!--<ul class="lista-produtos row">-->
+          <!--<li *ngFor="let produto of arListaProdutos" class="col-6">-->
+            <!--<img src="assets/imgs/image_default.png" (click)="detalheProduto(produto)" alt="">-->
+            <!--<div class="descricao">-->
+              <!--<h2 class="title-produto">{{ produto.descricao }}</h2>-->
+              <!--<span *ngIf="produto.vl_promotion > 0" class="valor-normal">{{ GlobalsService.getCurrency(produto.vl_promotion) }}</span>-->
+              <!--<span class="valor-normal" [ngClass]="{'valor-normal': produto.valor > 0, 'valor-promocao': produto.vl_promotion > 0}">{{ GlobalsService.getCurrency(produto.valor) }}</span>-->
+              <!--<span *ngIf="produto.status == 'INDISPONIVEL'" class="indisponivel">Indisponível</span>-->
+              <!--<button ion-button *ngIf="produto.status == 'DISPONIVEL'" (click)="this.CarrinhoProvider.addItemCarrinho(produto)"><img src="assets/imgs/icons/shopping-bag-white.png"></button>-->
+            <!--</div>-->
+          <!--</li>-->
           <!--<li class="col-6">-->
             <!--<img src="assets/imgs/produto.jpg" alt="">-->
             <!--<div class="descricao">-->
@@ -104,8 +122,8 @@
               <!--<span class="indisponivel">Indisponível</span>-->
             <!--</div>-->
           <!--</li>-->
-        </ul>
-      </div>
-    </div>
-  </div>
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
 </ion-content>
