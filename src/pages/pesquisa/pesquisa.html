@@ -45,27 +45,28 @@
 
 
 <ion-content padding>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 container-branco">
+  <ion-grid padding>
+    <ion-row>
+      <ion-col col-12 class="container-branco">
         <h2 class="title-categorias text-center">Pesquise Seus Produtos</h2>
         <h3 class="subtitle-categorias text-center">Monte o seu pedido:</h3>
         <form #form="ngForm" class="form-pesquisa">
-          <input type="text" (keyup)='filtraProdutos($event)' name="pesquisa" placeholder="Digite o produto desejado">
+          <input ion-input type="text" (keyup)='filtraProdutos($event)' name="pesquisa" placeholder="Digite o produto desejado">
         </form>
-        <ul class="lista-produtos row">
-          <li *ngFor="let itemFiltrado of itens" class="col-6">
-            <img src="assets/imgs/produto.jpg" (click)="detalheProduto(itemFiltrado)" alt="">
+        <ion-list ion-row no-lines class="lista-produtos">
+          <!--<ion-item *ngFor="let produto of arListaProdutos" col-6 [ngClass]="{'tag-indisponivel': produto.status == 'INDISPONIVEL'}" (click)="itemSelected(item)">-->
+          <ion-item *ngFor="let itemFiltrado of itens" col-6 [ngClass]="{'tag-indisponivel': itemFiltrado.status == 'INDISPONIVEL'}">
+            <img src="assets/imgs/image_default.png" (click)="detalheProduto(produto)" alt="">
             <div class="descricao">
               <h2 class="title-produto">{{ itemFiltrado.descricao }}</h2>
-              <span *ngIf="itemFiltrado.vl_promotion > 0" class="valor-promocao">{{ GlobalsService.getCurrency(itemFiltrado.vl_promotion) }}</span>
-              <span class="valor-normal">{{ GlobalsService.getCurrency(itemFiltrado.valor) }}</span>
+              <span *ngIf="itemFiltrado.vl_promotion > 0" class="valor-normal">{{ GlobalsService.getCurrency(itemFiltrado.vl_promotion) }}</span>
+              <span class="valor-normal" [ngClass]="{'valor-normal': itemFiltrado.valor > 0, 'valor-promocao': itemFiltrado.vl_promotion > 0}">{{ GlobalsService.getCurrency(itemFiltrado.valor) }}</span>
               <span *ngIf="itemFiltrado.status == 'INDISPONIVEL'" class="indisponivel">Indisponível</span>
-              <button *ngIf="itemFiltrado.status == 'DISPONIVEL'" (click)="this.CarrinhoProvider.addItemCarrinho(itemFiltrado)"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
+              <button ion-button *ngIf="itemFiltrado.status == 'DISPONIVEL'" (click)="this.CarrinhoProvider.addItemCarrinho(itemFiltrado)"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
             </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

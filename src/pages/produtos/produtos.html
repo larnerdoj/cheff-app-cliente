@@ -45,13 +45,14 @@
 
 
 <ion-content padding>
-  <ion-grid>
+  <ion-grid padding>
     <ion-row>
       <ion-col col-12 class="container-branco">
         <h2 class="title-categorias text-center">{{ categoriaNome }}</h2>
         <h3 class="subtitle-categorias text-center">Monte o seu pedido:</h3>
         <ion-list ion-row no-lines class="lista-produtos">
-          <button ion-item *ngFor="let produto of arListaProdutos" col-6 (click)="itemSelected(item)">
+          <!--<ion-item *ngFor="let produto of arListaProdutos" col-6 [ngClass]="{'tag-indisponivel': produto.status == 'INDISPONIVEL'}" (click)="itemSelected(item)">-->
+          <ion-item *ngFor="let produto of arListaProdutos" col-6 [ngClass]="{'tag-indisponivel': produto.status == 'INDISPONIVEL'}">
             <img src="assets/imgs/image_default.png" (click)="detalheProduto(produto)" alt="">
             <div class="descricao">
               <h2 class="title-produto">{{ produto.descricao }}</h2>
@@ -60,7 +61,7 @@
               <span *ngIf="produto.status == 'INDISPONIVEL'" class="indisponivel">Indisponível</span>
               <button ion-button *ngIf="produto.status == 'DISPONIVEL'" (click)="this.CarrinhoProvider.addItemCarrinho(produto)"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
             </div>
-          </button>
+          </ion-item>
         </ion-list>
       </ion-col>
     </ion-row>

@@ -71,7 +71,7 @@ export class CheffCliente {
       this.rootPage = CardapioPage;
     } else {
       this.GlobalsService.getImgRandom();
-      this.rootPage = LoginPage;
+      this.rootPage = ComandaFinalizadaPage;
     }
 
     /***************

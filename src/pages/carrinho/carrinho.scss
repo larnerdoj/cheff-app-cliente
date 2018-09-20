@@ -1,4 +1,8 @@
 page-carrinho {
+  .scroll-content {
+    z-index: 100;
+    margin-top: 175px !important;
+  }
   .container-topo-app {
     img.img-cancel-white {
       max-width: 25%;
@@ -119,10 +123,6 @@ page-carrinho {
     border-radius: 30px;
     border-bottom: none;
   }
-  .scroll-content {
-    z-index: 100;
-    margin-top: 135px !important;
-  }
   .container-item-sacola {
     .container-img-sacola {
       padding-right: 0;
@@ -149,7 +149,7 @@ page-carrinho {
     }
     .cancel-item {
       max-width: 100%;
-      margin-top: 15px;
+      margin-top: 8px;
     }
     .container-qtd-produto {
       padding: 0;
