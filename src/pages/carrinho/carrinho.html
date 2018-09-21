@@ -103,104 +103,37 @@
       <ion-col col-12 class="container-branco container-branco-rounded">
         <h2 class="title-categorias text-center">Meus Pedidos</h2>
         <h3 class="subtitle-categorias text-center">itens já pedidos</h3>
-        <ion-row class="container-branco-bottom container-item-sacola">
+
+        <ion-row *ngFor="let pedido of arPedidos" class="container-branco-bottom container-item-sacola">
           <ion-col col-7 class="col-7">
             <ion-row>
-              <ion-col col-5 class="container-img-sacola">
-                <img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">
+              <ion-col col-5 class="col-5 container-img-sacola">
+                <img class="img-carrinho" src="assets/imgs/image_default.png" alt="">
               </ion-col>
-              <ion-col col-7>
+              <ion-col col-7 class="col-7">
                 <span class="valor-produto-carrinho">
-                  <b>Águas</b> <br>
-                  Unit: R$ 5,00 <br>
-                  Total: R$ 15,00
+                  <b>{{ pedido.prod_desc }}</b> <br>
+                  <span *ngIf="pedido.vl_promotion > 0">
+                    Unid: {{ GlobalsService.getCurrency(pedido.vl_promotion) }} <br>
+                    Total: {{ GlobalsService.getCurrency(pedido.vl_promotion * pedido.qtd) }}
+                  </span>
+                  <span *ngIf="pedido.vl_promotion === 0">
+                    Unid: {{ GlobalsService.getCurrency(pedido.vl_unit) }} <br>
+                    Total: {{ GlobalsService.getCurrency(pedido.vl_unit * pedido.qtd) }}
+                  </span>
                 </span>
               </ion-col>
             </ion-row>
           </ion-col>
-          <ion-col col-3 class="col-3 container-qtd-produto">
-            <span class="qtd-itens-pedidos">3</span>
+          <ion-col col-3 class="col-2 container-qtd-produto">
+            <span class="qtd-itens-pedidos">{{ pedido.qtd }}</span>
           </ion-col>
           <ion-col col-2 class="col-2 btn-refazer-pedido">
-            <img (click)="refazerPedido(item)" class="cancel-item" src="assets/imgs/icons/repeat.png" alt="">
+            <img (click)="CarrinhoProvider.refazerPedido(pedido)" class="cancel-item" src="assets/imgs/icons/repeat.png" alt="">
           </ion-col>
         </ion-row>
-        <ion-row class="container-branco-bottom container-item-sacola">
-          <ion-col col-7 class="col-7">
-            <ion-row>
-              <ion-col col-5 class="container-img-sacola">
-                <img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">
-              </ion-col>
-              <ion-col col-7>
-                <span class="valor-produto-carrinho">
-                  <b>Águas</b> <br>
-                  Unit: R$ 5,00 <br>
-                  Total: R$ 15,00
-                </span>
-              </ion-col>
-            </ion-row>
-          </ion-col>
-          <ion-col col-3 class="col-3 container-qtd-produto">
-            <span class="qtd-itens-pedidos">3</span>
-          </ion-col>
-          <ion-col col-2 class="col-2 btn-refazer-pedido">
-            <img (click)="refazerPedido(item)" class="cancel-item" src="assets/imgs/icons/repeat.png" alt="">
-          </ion-col>
-        </ion-row>
+
       </ion-col>
     </ion-row>
   </ion-grid>
-  <!--<div class="container">-->
-    <!--<div class="row">-->
-      <!--<div class="col-12 container-branco container-branco-rounded">-->
-        <!--<h2 class="title-categorias text-center">Meus Pedidos</h2>-->
-        <!--<h3 class="subtitle-categorias text-center">itens já pedidos</h3>-->
-        <!--<div class="row container-branco-bottom container-item-sacola">-->
-          <!--<div class="col-7">-->
-            <!--<div class="row">-->
-              <!--<div class="col-5 container-img-sacola">-->
-                <!--<img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">-->
-              <!--</div>-->
-              <!--<div class="col-7">-->
-                <!--<span class="valor-produto-carrinho">-->
-                  <!--<b>Águas</b> <br>-->
-                  <!--Unit: R$ 5,00 <br>-->
-                  <!--Total: R$ 15,00-->
-                <!--</span>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 container-qtd-produto">-->
-            <!--<span class="qtd-itens-pedidos">3</span>-->
-          <!--</div>-->
-          <!--<div class="col-2 col-sm-4 col-md-4 col-lg-4 col-xl-4 btn-refazer-pedido">-->
-            <!--<img (click)="refazerPedido(item)" class="cancel-item" src="assets/imgs/icons/repeat.png" alt="">-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="row container-branco-bottom container-item-sacola">-->
-          <!--<div class="col-7">-->
-            <!--<div class="row">-->
-              <!--<div class="col-5 container-img-sacola">-->
-                <!--<img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">-->
-              <!--</div>-->
-              <!--<div class="col-7">-->
-                <!--<span class="valor-produto-carrinho">-->
-                  <!--<b>Acompanhamento Vinagrete</b> <br>-->
-                  <!--Unit: R$ 5,00 <br>-->
-                  <!--Total: R$ 15,00-->
-                <!--</span>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 container-qtd-produto">-->
-            <!--<span class="qtd-itens-pedidos">3</span>-->
-          <!--</div>-->
-          <!--<div class="col-2 col-sm-4 col-md-4 col-lg-4 col-xl-4 btn-refazer-pedido">-->
-            <!--<img (click)="refazerPedido(item)" class="cancel-item" src="assets/imgs/icons/repeat.png" alt="">-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-
-    <!--</div>-->
-  <!--</div>-->
 </ion-content>

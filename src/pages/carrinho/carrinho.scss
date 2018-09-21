@@ -23,7 +23,7 @@ page-carrinho {
   }
   .container-branco-bottom {
     border-radius: 0 0 20px 20px;
-    padding: 20px !important;
+    padding: 0 20px 20px !important;
     border-bottom: none;
     input[type=number] {
       width: 25px;
@@ -127,8 +127,8 @@ page-carrinho {
     .container-img-sacola {
       padding-right: 0;
     }
-    &:nth-child(even) {
-      padding-top: 0 !important;
+    &:first-child {
+      padding-top: 20px !important;
     }
     margin-bottom: 0;
     img {
@@ -153,6 +153,7 @@ page-carrinho {
     }
     .container-qtd-produto {
       padding: 0;
+      margin-left: 20px;
     }
     input[type=number] {
       width: 25px;
@@ -177,8 +178,9 @@ page-carrinho {
     .btn-refazer-pedido {
       background: $azul;
       height: 55.5px;
-      margin-top: 5px;
+      margin-top: 20px;
       border-radius: 15px;
+      margin-left: -5px;
     }
     .qtd-itens-pedidos {
       font-size: 24px;
@@ -186,6 +188,7 @@ page-carrinho {
       line-height: 66px;
       text-align: right;
       float: right;
+      margin-top: 15px;
       margin-right: 25px;
     }
   }

@@ -14,6 +14,7 @@ import {PesquisaPage} from "../pesquisa/pesquisa";
 export class CarrinhoPage {
 
   public qtdProduto;
+  arPedidos: Array<any>;
 
   constructor(
     public navCtrl: NavController,
@@ -27,6 +28,16 @@ export class CarrinhoPage {
   }
 
   ionViewDidLoad() {
+    this.HttpService.JSON_GET(`/comandas/${this.StorageService.getItem('idComanda')}/itens/${this.GlobalsService.strEmpresa}`, false, true, 'json')
+      .then(
+        (res) => {
+          // console.log(res.json());
+          this.arPedidos = res.json();
+        },
+        (error)=> {
+          console.log(error);
+        }
+      )
   }
 
   /***************

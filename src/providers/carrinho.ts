@@ -54,15 +54,40 @@ export class CarrinhoProvider {
       obs: item.obs
     });
 
-    // this.itensCart.push(
-    //   {
-    //   'ItemId': item.id,
-    //   'ItemValor': item.valor,
-    //   'ItemQTD': qtd,
-    //   'ItemName': item.descricao,
-    //   //'ItemDescricao': item.ItemDescricao,
-    //   'ItemPhoto': item.ItemPhoto
-    // });
+    this.calculaCarrinho();
+
+    let alert = this.AlertController.create({
+      title: 'Sucesso',
+      message: 'O item foi adicionado a sacola com sucesso!',
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {}
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  /***************
+   ADICIONA ITEM DO CARRINHO
+   ***************/
+  addItemRefazer(item, qtd:number){
+
+    this.itensCart.push({
+      id: item.id,
+      codigo: item.prod_code,
+      descricao: item.prod_desc,
+      categoria: item.prod_cat,
+      qtd: qtd,
+      vl_unit: (item.vl_venda) ? item.vl_venda : item.valor,
+      is_promotion: item.is_promotion,
+      vl_promotion: item.vl_promotion,
+      vl_rate_promotion: item.vl_promotion,
+      print_item: `${item.print_item}/${item.print_ip}`,
+      photo: item.photo,
+      obs: item.obs
+    });
     this.calculaCarrinho();
 
     let alert = this.AlertController.create({
@@ -212,6 +237,69 @@ export class CarrinhoProvider {
     });
     alert.present();
     console.log(this.itensCart);
+  }
+
+  /***************
+   REFAZER PEDIDO CARRINHO
+   ***************/
+  refazerPedido(item){
+    // console.log(item);
+    let alert = this.AlertController.create({
+      title: 'Adicionar a sacola',
+      message: `O item ${item.prod_desc} será adicionado a sacola`,
+      inputs: [
+        {
+          name: 'qtd',
+          placeholder: 'Digite a quantidade',
+          type: 'tel',
+          value: this.qtd
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {}
+        },
+        {
+          text: 'Ok',
+          handler: (res) => {
+
+            let alert = this.AlertController.create({
+              title: 'Observações',
+              message: `Deseja enviar alguma observação para o item ${item.prod_desc}?`,
+              inputs: [
+                {
+                  name: 'obs',
+                  placeholder: 'Digite a observação',
+                  type: 'text',
+                  value: this.obs
+                },
+              ],
+              buttons: [
+                {
+                  text: 'Nenhuma Observação',
+                  handler: () => {
+                    this.enviaPedido(item, res.qtd);
+                  }
+                },
+                {
+                  text: 'Enviar',
+                  handler: (resObs) => {
+                    item.obs = resObs.obs;
+                    console.log(resObs.obs);
+                    console.log(item.obs);
+                    this.enviaPedido(item, res.qtd);
+                  }
+                }
+              ]
+            });
+            alert.present();
+          }
+        }
+      ]
+    });
+    alert.present();
+    // console.log(this.itensCart);
   }
 
   /***************
