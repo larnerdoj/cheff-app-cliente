@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { CardapioPage } from "../cardapio/cardapio";
 //import {ErrorTokenPage} from "../error-token/error-token";
@@ -30,7 +30,8 @@ export class LoginPage {
     private GlobalsService: GlobalsService,
     private StorageService: StorageService,
     private BarcodeScanner: BarcodeScanner,
-    private AlertService: AlertService
+    private AlertService: AlertService,
+    public LoadingController: LoadingController
   ) {
   }
 
@@ -46,40 +47,45 @@ export class LoginPage {
     console.log(form.value);
     if (form.status === 'INVALID') {
       this.AlertService.showAlert('ATENÇÃO', 'Informe o token para continuar');
-
     } else {
-
-      this.HttpService.JSON_GET(`/comandas/mobile/login/token/${form.value.strToken}/${this.GlobalsService.strEmpresa}`, false, true, 'json')
-        .then(
-          (res) => {
-            //console.log(res.json());
-            if (res.json() === 'Comanda não encontrada!') {
-              this.navCtrl.push(ErrorTokenPage);
-              setTimeout(() => {
-                this.navCtrl.push(LoginPage, { animate: true, direction: 'back' })
-              }, 5000);
-            } else {
+      //LOADING
+      let loading = this.LoadingController.create({
+        spinner: 'crescent',
+        content: 'Carregando'
+      });
+      loading.present().then(() => {
+        this.HttpService.JSON_GET(`/comandas/mobile/login/token/${form.value.strToken}/${this.GlobalsService.strEmpresa}`, false, true, 'json')
+          .then(
+            (res) => {
               //console.log(res.json());
-              this.StorageService.setItem('isLogged', true);
-              this.StorageService.setItem('nomeComanda', res.json().name);
-              this.StorageService.setItem('codigoComanda', res.json().code);
-              this.StorageService.setItem('idComanda', res.json().id);
-              this.StorageService.setItem('userId', res.json().user_id);
-              this.StorageService.setItem('credit', res.json().credit);
-              this.StorageService.setItem('mesa', res.json().mesa);
-              this.StorageService.setItem('atendente', res.json().atendente);
-              this.navCtrl.setRoot(CardapioPage, { paramStrToken: form.value.strToken });
+              if (res.json() === 'Comanda não encontrada!') {
+                this.navCtrl.push(ErrorTokenPage);
+                setTimeout(() => {
+                  this.navCtrl.push(LoginPage, {animate: true, direction: 'back'})
+                }, 5000);
+              } else {
+                //console.log(res.json());
+                this.StorageService.setItem('isLogged', true);
+                this.StorageService.setItem('nomeComanda', res.json().name);
+                this.StorageService.setItem('codigoComanda', res.json().code);
+                this.StorageService.setItem('idComanda', res.json().id);
+                this.StorageService.setItem('userId', res.json().user_id);
+                this.StorageService.setItem('credit', res.json().credit);
+                this.StorageService.setItem('mesa', res.json().mesa);
+                this.StorageService.setItem('atendente', res.json().atendente);
+                this.navCtrl.setRoot(CardapioPage, {paramStrToken: form.value.strToken});
+              }
+              loading.dismiss();
+            },
+            (error) => {
+              console.log(error);
+              //this.navCtrl.setRoot(ErrorTokenPage);
+              this.StorageService.setItem('isLogged', false);
+              this.navCtrl.push(ErrorTokenPage);
+              loading.dismiss();
             }
-
-
-          },
-          (error) => {
-            console.log(error);
-            //this.navCtrl.setRoot(ErrorTokenPage);
-            this.StorageService.setItem('isLogged', false);
-            this.navCtrl.push(ErrorTokenPage);
-          }
-        )
+          )
+      });
     }
   }
 

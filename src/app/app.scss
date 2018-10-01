@@ -41,15 +41,11 @@ ion-navbar {
 }
 .container-topo-app {
   color: $branco;
-  margin-top: 30px;
+  margin-top: 20px;
   .col-6 {
     margin: 0;
   }
-  .icones-topo {
-    padding-right: 0;
-  }
   .icone-menu {
-    padding-right: 0;
     max-width: calc(33.333333% - 30px);
   }
   span {
@@ -72,25 +68,29 @@ ion-navbar {
     }
   }
   img.icons {
-    max-width: 60%;
+    max-width: 80%;
     float: right;
   }
+  icones-topo.col {
+    margin-top: -5px;
+  }
   .pesquisar {
+    margin-top: -10px;
     padding-right: 0;
-    margin-left: 30px;
     position: relative;
     button {
       position: relative;
       float: right;
-      padding-right: 0;
+      padding: 0;
     }
   }
   .carrinho {
-    padding-left: 0;
+    margin-top: -10px;
+    margin-right: 20px;
     button {
       position: relative;
       float: right;
-      padding-left: 0;
+      padding: 0;
     }
     .numero-items {
       width: 17px;
@@ -105,7 +105,7 @@ ion-navbar {
     }
   }
   .titulo-topo {
-    margin-top: 15px;
+    margin-top: 0;
     font-size: 16px;
     font-weight: 400;
     b {
@@ -194,5 +194,8 @@ ion-navbar {
   }
 }
 
+.scroll-content {
+
+}
 .grid-item { width: 50%; }
 .grid-item--width2 { width: 400px; }

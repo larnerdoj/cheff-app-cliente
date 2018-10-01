@@ -6,102 +6,102 @@
 -->
 <ion-header>
 
-  <div *ngIf="arDetalhesProduto">
-    <img *ngIf="this.arDetalhesProduto.photo === null" class="img-header" [src]="this.GlobalsService.bgDefault" alt="backgrounds">
-  </div>
-  <ion-navbar>
-    <div class="container container-topo-app">
-      <div class="row">
-        <div class="col-5"><img src="assets/imgs/icons/cancel-white.png" (click)="voltar()" class="img-cancel-white back-button disable-hover bar-button bar-button-ios back-button-ios bar-button-default bar-button-default-ios show-back-button" alt=""></div>
-        <div class="col-6 offset-1 icones-topo">
-          <div class="row">
-            <div class="col-4 pesquisar">
-              <button (click)="pesquisar()" class="btn-pesquisar">
+  <!--<div *ngIf="arDetalhesProduto">-->
+    <!--<img *ngIf="this.arDetalhesProduto.photo === null" class="img-header" [src]="this.GlobalsService.bgDefault" alt="backgrounds">-->
+  <!--</div>-->
+  <img class="img-header" [src]="this.GlobalsService.bgDefault" alt="backgrounds">
+  <ion-navbar padding>
+    <ion-grid class="container-topo-app">
+      <ion-row>
+        <ion-col col-5><img src="assets/imgs/logo-branca.png" class="img-logo-branca" alt=""></ion-col>
+        <ion-col col-6 offset-1 class="icones-topo">
+          <ion-row>
+            <ion-col col-4 class="pesquisar">
+              <button ion-button (click)="pesquisar()" class="btn-pesquisar">
                 <img src="assets/imgs/icons/search-white.png" class="icons" alt="">
               </button>
-            </div>
-            <div class="col-4  carrinho">
-              <button (click)="verCarrinho()">
+            </ion-col>
+            <ion-col col-4 class="carrinho">
+              <button ion-button (click)="verCarrinho()">
                 <img src="assets/imgs/icons/shopping-bag-white.png" class="icons" alt="">
                 <span class="numero-items">{{ CarrinhoProvider.itensCart.length }}</span>
               </button>
-            </div>
-            <div class="col-4 icone-menu">
+            </ion-col>
+            <ion-col col-4 class="icone-menu">
               <button class="button-menu" ion-button menuToggle icon-only>
                 <ion-icon name='menu'></ion-icon>
               </button>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="arDetalhesProduto" class="col-12 titulo-topo text-center">
-          <b>{{ this.arDetalhesProduto.name }}</b> <br>
-          {{ strCategoriaProduto }}
-        </div>
-      </div>
-    </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12 text-center class="titulo-topo">
+          <b>{{ StorageService.getItem('nomeComanda') }}</b> <br>
+          {{ StorageService.getItem('codigoComanda') }}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <div class="container">
-    <div class="row" *ngIf="arDetalhesProduto">
-      <div class="col-12 container-branco">
+  <ion-grid padding>
+    <ion-row *ngIf="arDetalhesProduto">
+      <ion-col col-12 class="container-branco">
         <h2 class="title-categorias title-produtos text-left">{{ this.arDetalhesProduto.name }}</h2>
         <h3 class="subtitle-categorias subtitle-produtos text-left">{{ strCategoriaProduto }}</h3>
-      </div>
-      <div class="col-12 container-branco container-branco-bottom">
-        <div class="row">
-          <div class="col-4">
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="arDetalhesProduto">
+      <ion-col col-12 class="container-branco container-branco-bottom">
+        <ion-row>
+          <ion-col col-4 class="col-4">
             <span *ngIf="this.arDetalhesProduto.vl_promotion > 0" class="valor-normal">{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_promotion) }}</span> <br>
             <span *ngIf="this.arDetalhesProduto.vl_venda > 0" class="valor-normal" [ngClass]="{'valor-normal': this.arDetalhesProduto.vl_venda > 0, 'valor-promocao': this.arDetalhesProduto.vl_promotion > 0}">{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_venda) }}</span>
             <br>
             <span *ngIf="!this.arDetalhesProduto.vl_promotion > 0" class="valor-normal soma-pedido-detalhe">({{ qtdProduto }}x) <br>{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_venda * qtdProduto) }}</span>
             <span *ngIf="this.arDetalhesProduto.vl_promotion > 0" class="valor-normal soma-pedido-detalhe">({{ qtdProduto }}x) <br>{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_promotion * qtdProduto) }}</span>
-          </div>
-          <div class="col-8">
-            <div class="row">
+          </ion-col>
+          <ion-col col-8>
+            <ion-row>
               <form #form="ngForm" (ngSubmit)="addItemCarrinho(arDetalhesProduto, form)" class="col-6">
-                <div>
-                  <button ion-button class="add-carrinho" disabled *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
-                  <button ion-button class="add-carrinho" *ngIf="this.arDetalhesProduto.sts === 'DISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
-                  <input id="number-hidden" type="hidden" name="qtdProduto" [(ngModel)]="qtdProduto" min="1">
-                </div>
+                <button ion-button class="add-carrinho" disabled *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
+                <button ion-button class="add-carrinho" *ngIf="this.arDetalhesProduto.sts === 'DISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
+                <input id="number-hidden" type="hidden" name="qtdProduto" [(ngModel)]="qtdProduto" min="1">
               </form>
-              <div class="col-6">
-                <div class="row">
-                  <div class="col-4 subtrai">
-                    <button type="submit" (click)="subtrai()" class="del">-</button>
-                  </div>
-                  <div class="col-4 input-number">
+              <ion-col col-6>
+                <ion-row>
+                  <ion-col col-12>
+                    <button ion-button type="submit" (click)="subtrai()" class="del">-</button>
                     <input id="number" type="number" name="qtd-visible" value="{{ qtdProduto }}" min="1" disabled>
-                  </div>
-                  <div class="col-4 somar">
-                    <button type="submit" (click)="soma()" class="add">+</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row" *ngIf="arDetalhesProduto">
-      <div class="col-12 container-branco" *ngIf="this.arDetalhesProduto.descr">
+                    <button ion-button type="submit" (click)="soma()" class="add">+</button>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="arDetalhesProduto">
+      <ion-col col-12 class="container-branco" *ngIf="this.arDetalhesProduto.descr">
         <p class="descricao-produto">
           <b>Ingredientes:</b>
           {{ this.arDetalhesProduto.ingr }}
         </p>
-      </div>
-      <div class="col-12 container-branco container-branco-bottom container-branco-bottom-no-margin" *ngIf="this.arDetalhesProduto.prepar != 'NULL' && this.arDetalhesProduto.prepar != null && this.arDetalhesProduto.prepar != ''">
+      </ion-col>
+      <ion-col col-12 class="container-branco container-branco-bottom container-branco-bottom-no-margin" *ngIf="this.arDetalhesProduto.prepar != 'NULL' && this.arDetalhesProduto.prepar != null && this.arDetalhesProduto.prepar != ''">
         <p class="descricao-produto">
           <ion-icon name="ios-timer-outline"></ion-icon> {{ this.arDetalhesProduto.prepar }}
         </p>
-      </div>
-      <div class="col-12 container-branco container-botoes">
-        <div class="row" *ngIf="arDetalhesProduto">
-          <div class="col-8">
+      </ion-col>
+      <ion-col col-12 class="container-branco container-botoes">
+        <ion-row *ngIf="arDetalhesProduto">
+          <ion-col col-8 class="col-8">
             <form #form="ngForm" (ngSubmit)="addItemCarrinho(arDetalhesProduto, form)">
               <div>
                 <button ion-button class="btn-block btn-ver-cardapio" disabled *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Adicionar</button>
@@ -109,19 +109,97 @@
                 <input id="number-hidden-2" type="hidden" name="qtdProduto" [(ngModel)]="qtdProduto" min="1">
               </div>
             </form>
-          </div>
-          <div class="col-4">
+          </ion-col>
+          <ion-col col-4 class="col-4">
             <button ion-button class="btn-block btn-ver-cardapio btn-imprimir" disabled *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'"><img src="assets/imgs/icons/print-white.png" alt=""></button>
             <button ion-button (click)="preparaPedido()" class="btn-block btn-ver-cardapio btn-imprimir" *ngIf="this.arDetalhesProduto.sts === 'DISPONIVEL'"><img src="assets/imgs/icons/print-white.png" alt=""></button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row produto-indisponivel-detalhes" *ngIf="arDetalhesProduto">
-      <div class="col-12" *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'">
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row class="produto-indisponivel-detalhes" *ngIf="arDetalhesProduto">
+      <ion-col col-12 *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'">
         <p class="text-center">Produto Indisponível</p>
-      </div>
-    </div>
-  </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!--<div class="container">-->
+    <!--<div class="row" *ngIf="arDetalhesProduto">-->
+      <!--<div class="col-12 container-branco">-->
+        <!--<h2 class="title-categorias title-produtos text-left">{{ this.arDetalhesProduto.name }}</h2>-->
+        <!--<h3 class="subtitle-categorias subtitle-produtos text-left">{{ strCategoriaProduto }}</h3>-->
+      <!--</div>-->
+      <!--<div class="col-12 container-branco container-branco-bottom">-->
+        <!--<div class="row">-->
+          <!--<div class="col-4">-->
+            <!--<span *ngIf="this.arDetalhesProduto.vl_promotion > 0" class="valor-normal">{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_promotion) }}</span> <br>-->
+            <!--<span *ngIf="this.arDetalhesProduto.vl_venda > 0" class="valor-normal" [ngClass]="{'valor-normal': this.arDetalhesProduto.vl_venda > 0, 'valor-promocao': this.arDetalhesProduto.vl_promotion > 0}">{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_venda) }}</span>-->
+            <!--<br>-->
+            <!--<span *ngIf="!this.arDetalhesProduto.vl_promotion > 0" class="valor-normal soma-pedido-detalhe">({{ qtdProduto }}x) <br>{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_venda * qtdProduto) }}</span>-->
+            <!--<span *ngIf="this.arDetalhesProduto.vl_promotion > 0" class="valor-normal soma-pedido-detalhe">({{ qtdProduto }}x) <br>{{ GlobalsService.getCurrency(this.arDetalhesProduto.vl_promotion * qtdProduto) }}</span>-->
+          <!--</div>-->
+          <!--<div class="col-8">-->
+            <!--<div class="row">-->
+              <!--<form #form="ngForm" (ngSubmit)="addItemCarrinho(arDetalhesProduto, form)" class="col-6">-->
+                <!--<div>-->
+                  <!--<button ion-button class="add-carrinho" disabled *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png"></button>-->
+                  <!--<button ion-button class="add-carrinho" *ngIf="this.arDetalhesProduto.sts === 'DISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png"></button>-->
+                  <!--<input id="number-hidden" type="hidden" name="qtdProduto" [(ngModel)]="qtdProduto" min="1">-->
+                <!--</div>-->
+              <!--</form>-->
+              <!--<div class="col-6">-->
+                <!--<div class="row">-->
+                  <!--<div class="col-4 subtrai">-->
+                    <!--<button type="submit" (click)="subtrai()" class="del">-</button>-->
+                  <!--</div>-->
+                  <!--<div class="col-4 input-number">-->
+                    <!--<input id="number" type="number" name="qtd-visible" value="{{ qtdProduto }}" min="1" disabled>-->
+                  <!--</div>-->
+                  <!--<div class="col-4 somar">-->
+                    <!--<button type="submit" (click)="soma()" class="add">+</button>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row" *ngIf="arDetalhesProduto">-->
+      <!--<div class="col-12 container-branco" *ngIf="this.arDetalhesProduto.descr">-->
+        <!--<p class="descricao-produto">-->
+          <!--<b>Ingredientes:</b>-->
+          <!--{{ this.arDetalhesProduto.ingr }}-->
+        <!--</p>-->
+      <!--</div>-->
+      <!--<div class="col-12 container-branco container-branco-bottom container-branco-bottom-no-margin" *ngIf="this.arDetalhesProduto.prepar != 'NULL' && this.arDetalhesProduto.prepar != null && this.arDetalhesProduto.prepar != ''">-->
+        <!--<p class="descricao-produto">-->
+          <!--<ion-icon name="ios-timer-outline"></ion-icon> {{ this.arDetalhesProduto.prepar }}-->
+        <!--</p>-->
+      <!--</div>-->
+      <!--<div class="col-12 container-branco container-botoes">-->
+        <!--<div class="row" *ngIf="arDetalhesProduto">-->
+          <!--<div class="col-8">-->
+            <!--<form #form="ngForm" (ngSubmit)="addItemCarrinho(arDetalhesProduto, form)">-->
+              <!--<div>-->
+                <!--<button ion-button class="btn-block btn-ver-cardapio" disabled *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Adicionar</button>-->
+                <!--<button ion-button class="btn-block btn-ver-cardapio" *ngIf="this.arDetalhesProduto.sts === 'DISPONIVEL'"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Adicionar</button>-->
+                <!--<input id="number-hidden-2" type="hidden" name="qtdProduto" [(ngModel)]="qtdProduto" min="1">-->
+              <!--</div>-->
+            <!--</form>-->
+          <!--</div>-->
+          <!--<div class="col-4">-->
+            <!--<button ion-button class="btn-block btn-ver-cardapio btn-imprimir" disabled *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'"><img src="assets/imgs/icons/print-white.png" alt=""></button>-->
+            <!--<button ion-button (click)="preparaPedido()" class="btn-block btn-ver-cardapio btn-imprimir" *ngIf="this.arDetalhesProduto.sts === 'DISPONIVEL'"><img src="assets/imgs/icons/print-white.png" alt=""></button>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="row produto-indisponivel-detalhes" *ngIf="arDetalhesProduto">-->
+      <!--<div class="col-12" *ngIf="this.arDetalhesProduto.sts === 'INDISPONIVEL'">-->
+        <!--<p class="text-center">Produto Indisponível</p>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
 </ion-content>
 

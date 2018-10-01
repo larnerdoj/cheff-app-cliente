@@ -7,45 +7,47 @@
 <ion-header>
 
   <img class="img-header" [src]="this.GlobalsService.bgDefault" alt="backgrounds">
-  <ion-navbar>
-    <div class="container container-topo-app">
-      <div class="row">
-        <div class="col-5"><img src="assets/imgs/logo-branca.png" class="img-logo-branca" alt=""></div>
-        <div class="col-6 offset-1 icones-topo">
-          <div class="row">
-            <div class="col-4 pesquisar">
-              <button (click)="pesquisar()" class="btn-pesquisar">
+  <ion-navbar padding>
+    <ion-grid class="container-topo-app">
+      <ion-row>
+        <ion-col col-5><img src="assets/imgs/logo-branca.png" class="img-logo-branca" alt=""></ion-col>
+        <ion-col col-6 offset-1 class="icones-topo">
+          <ion-row>
+            <ion-col col-4 class="pesquisar">
+              <button ion-button (click)="pesquisar()" class="btn-pesquisar">
                 <img src="assets/imgs/icons/search-white.png" class="icons" alt="">
               </button>
-            </div>
-            <div class="col-4  carrinho">
-              <button (click)="verCarrinho()">
+            </ion-col>
+            <ion-col col-4 class="carrinho">
+              <button ion-button (click)="verCarrinho()">
                 <img src="assets/imgs/icons/shopping-bag-white.png" class="icons" alt="">
                 <span class="numero-items">{{ CarrinhoProvider.itensCart.length }}</span>
               </button>
-            </div>
-            <div class="col-4 icone-menu">
+            </ion-col>
+            <ion-col col-4 class="icone-menu">
               <button class="button-menu" ion-button menuToggle icon-only>
                 <ion-icon name='menu'></ion-icon>
               </button>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 titulo-topo text-center">
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12 text-center class="titulo-topo">
           <b>{{ StorageService.getItem('nomeComanda') }}</b> <br>
           {{ StorageService.getItem('codigoComanda') }}
-        </div>
-      </div>
-    </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 container-branco">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12 class="col-12 container-branco">
         <h2 class="title-categorias text-center">Minha Sacola</h2>
         <h3 class="subtitle-categorias text-center">envie seu pedido de uma só vez</h3>
         <div *ngIf="CarrinhoProvider.itensCart.length === 0">
@@ -53,101 +55,152 @@
             Nenhum produto no carrinho!
           </div>
         </div>
-        <div *ngFor="let item of CarrinhoProvider.itensCart; let i = index" class="row container-branco-bottom container-item-sacola">
-          <div class="col-8">
-            <div class="row">
-              <div class="col-4 container-img-sacola">
+        <ion-row *ngFor="let item of CarrinhoProvider.itensCart; let i = index" class="container-branco-bottom container-item-sacola">
+          <ion-col col-8 class="col-8">
+            <ion-row>
+              <ion-col col-4 class="col-4 container-img-sacola">
                 <img class="img-carrinho" src="assets/imgs/image_default.png" alt="">
-              </div>
-              <div class="col-8">
+              </ion-col>
+              <ion-col col-8 class="col-8">
                 <span class="valor-produto-carrinho">
                   <b>{{ item.descricao }}</b> <br>
                   Unit: {{ GlobalsService.getCurrency(item.vl_unit)  }} <br>
                   Total: R$ {{ GlobalsService.getCurrency(item.vl_unit * item.qtd) }} <br>
                   Obs: {{ item.obs }}
                 </span>
-              </div>
-            </div>
-          </div>
-          <div class="col-2 col-sm-2 col-md-2 col-lg-3 col-xl-3 container-qtd-produto">
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          <ion-col col-2 class="col-2 container-qtd-produto">
             <button (click)="subtrai(i)" class="del">-</button>
             <input id="number2" type="number" [value]=item.qtd min="1">
             <button (click)="soma(i)" class="add">+</button>
-          </div>
-          <div class="col-2 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          </ion-col>
+          <ion-col>
             <img (click)="cancelarItem(item)" class="cancel-item" src="assets/imgs/icons/cancel.png" alt="">
-          </div>
-        </div>
-      </div>
-      <div class="col-12 container-branco container-branco-bottom text-center">
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col col-12 class="container-branco container-branco-bottom text-center">
         <span class="valor-pedido">
           Total: <br>
           <b>{{ GlobalsService.getCurrency(CarrinhoProvider.totalCart) }}</b>
         </span>
-      </div>
-
-      <div class="col-12 container-branco container-botoes">
-        <div class="row">
-          <div class="col-8">
+      </ion-col>
+      <ion-col col-12 class="col-12 container-branco container-botoes">
+        <ion-row>
+          <ion-col col-8 class="col-8">
             <button ion-button (click)="CarrinhoProvider.enviaPedido(CarrinhoProvider.totalCart, CarrinhoProvider.itensCart)" class="btn-block btn-ver-cardapio" disabled *ngIf="CarrinhoProvider.itensCart.length === 0"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Fazer Pedido</button>
             <button ion-button (click)="CarrinhoProvider.enviaPedido(CarrinhoProvider.totalCart, CarrinhoProvider.itensCart)" class="btn-block btn-ver-cardapio" *ngIf="this.CarrinhoProvider.itensCart.length > 0"><img src="assets/imgs/icons/shopping-bag-white.png" alt=""> Fazer Pedido</button>
-          </div>
-          <div class="col-4">
+          </ion-col>
+          <ion-col col-4 class="col-4">
             <button (click)="esvaziarCarrinho()" type="submit" class="btn-block btn-ver-cardapio btn-imprimir btn-cancelar" disabled *ngIf="CarrinhoProvider.itensCart.length === 0"><img src="assets/imgs/icons/cancel-white.png" alt=""></button>
             <button (click)="esvaziarCarrinho()" type="submit" class="btn-block btn-ver-cardapio btn-imprimir btn-cancelar" *ngIf="CarrinhoProvider.itensCart.length > 0"><img src="assets/imgs/icons/cancel-white.png" alt=""></button>
-          </div>
-        </div>
-      </div>
+          </ion-col>
+        </ion-row>
+      </ion-col>
 
-      <div class="col-12 container-branco container-branco-rounded">
+      <ion-col col-12 class="container-branco container-branco-rounded">
         <h2 class="title-categorias text-center">Meus Pedidos</h2>
         <h3 class="subtitle-categorias text-center">itens já pedidos</h3>
-        <div class="row container-branco-bottom container-item-sacola">
-          <div class="col-7">
-            <div class="row">
-              <div class="col-5 container-img-sacola">
+        <ion-row class="container-branco-bottom container-item-sacola">
+          <ion-col col-7 class="col-7">
+            <ion-row>
+              <ion-col col-5 class="container-img-sacola">
                 <img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">
-              </div>
-              <div class="col-7">
+              </ion-col>
+              <ion-col col-7>
                 <span class="valor-produto-carrinho">
                   <b>Águas</b> <br>
                   Unit: R$ 5,00 <br>
                   Total: R$ 15,00
                 </span>
-              </div>
-            </div>
-          </div>
-          <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 container-qtd-produto">
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          <ion-col col-3 class="col-3 container-qtd-produto">
             <span class="qtd-itens-pedidos">3</span>
-          </div>
-          <div class="col-2 col-sm-4 col-md-4 col-lg-4 col-xl-4 btn-refazer-pedido">
+          </ion-col>
+          <ion-col col-2 class="col-2 btn-refazer-pedido">
             <img (click)="refazerPedido(item)" class="cancel-item" src="assets/imgs/icons/repeat.png" alt="">
-          </div>
-        </div>
-        <div class="row container-branco-bottom container-item-sacola">
-          <div class="col-7">
-            <div class="row">
-              <div class="col-5 container-img-sacola">
+          </ion-col>
+        </ion-row>
+        <ion-row class="container-branco-bottom container-item-sacola">
+          <ion-col col-7 class="col-7">
+            <ion-row>
+              <ion-col col-5 class="container-img-sacola">
                 <img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">
-              </div>
-              <div class="col-7">
+              </ion-col>
+              <ion-col col-7>
                 <span class="valor-produto-carrinho">
-                  <b>Acompanhamento Vinagrete</b> <br>
+                  <b>Águas</b> <br>
                   Unit: R$ 5,00 <br>
                   Total: R$ 15,00
                 </span>
-              </div>
-            </div>
-          </div>
-          <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 container-qtd-produto">
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          <ion-col col-3 class="col-3 container-qtd-produto">
             <span class="qtd-itens-pedidos">3</span>
-          </div>
-          <div class="col-2 col-sm-4 col-md-4 col-lg-4 col-xl-4 btn-refazer-pedido">
+          </ion-col>
+          <ion-col col-2 class="col-2 btn-refazer-pedido">
             <img (click)="refazerPedido(item)" class="cancel-item" src="assets/imgs/icons/repeat.png" alt="">
-          </div>
-        </div>
-      </div>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!--<div class="container">-->
+    <!--<div class="row">-->
+      <!--<div class="col-12 container-branco container-branco-rounded">-->
+        <!--<h2 class="title-categorias text-center">Meus Pedidos</h2>-->
+        <!--<h3 class="subtitle-categorias text-center">itens já pedidos</h3>-->
+        <!--<div class="row container-branco-bottom container-item-sacola">-->
+          <!--<div class="col-7">-->
+            <!--<div class="row">-->
+              <!--<div class="col-5 container-img-sacola">-->
+                <!--<img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">-->
+              <!--</div>-->
+              <!--<div class="col-7">-->
+                <!--<span class="valor-produto-carrinho">-->
+                  <!--<b>Águas</b> <br>-->
+                  <!--Unit: R$ 5,00 <br>-->
+                  <!--Total: R$ 15,00-->
+                <!--</span>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 container-qtd-produto">-->
+            <!--<span class="qtd-itens-pedidos">3</span>-->
+          <!--</div>-->
+          <!--<div class="col-2 col-sm-4 col-md-4 col-lg-4 col-xl-4 btn-refazer-pedido">-->
+            <!--<img (click)="refazerPedido(item)" class="cancel-item" src="assets/imgs/icons/repeat.png" alt="">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="row container-branco-bottom container-item-sacola">-->
+          <!--<div class="col-7">-->
+            <!--<div class="row">-->
+              <!--<div class="col-5 container-img-sacola">-->
+                <!--<img class="img-carrinho" src="assets/imgs/produto.jpg" alt="">-->
+              <!--</div>-->
+              <!--<div class="col-7">-->
+                <!--<span class="valor-produto-carrinho">-->
+                  <!--<b>Acompanhamento Vinagrete</b> <br>-->
+                  <!--Unit: R$ 5,00 <br>-->
+                  <!--Total: R$ 15,00-->
+                <!--</span>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 container-qtd-produto">-->
+            <!--<span class="qtd-itens-pedidos">3</span>-->
+          <!--</div>-->
+          <!--<div class="col-2 col-sm-4 col-md-4 col-lg-4 col-xl-4 btn-refazer-pedido">-->
+            <!--<img (click)="refazerPedido(item)" class="cancel-item" src="assets/imgs/icons/repeat.png" alt="">-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
 
-    </div>
-  </div>
+    <!--</div>-->
+  <!--</div>-->
 </ion-content>

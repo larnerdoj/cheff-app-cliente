@@ -71,7 +71,7 @@ export class CheffCliente {
       this.rootPage = CardapioPage;
     } else {
       this.GlobalsService.getImgRandom();
-      this.rootPage = LoginPage;
+      this.rootPage = ComandaFinalizadaPage;
     }
 
     /***************
@@ -135,7 +135,10 @@ export class CheffCliente {
         {
           text: 'Logout',
           handler: (res) => {
-            this.StorageService.clear();
+            this.StorageService.setItem('isLogged', false);
+            this.StorageService.setItem('nomeComanda', '');
+            this.StorageService.setItem('idComanda', '');
+            this.StorageService.setItem('userId', '');
 
             this.GlobalsService.getImgRandom();
             this.rootPage = LoginPage;
