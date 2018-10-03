@@ -15,7 +15,7 @@ page-carrinho {
     border-radius: 20px 20px 0 0;
     border-bottom: 1px solid $lightgray;
     .font-error-token {
-      font-size: 24px;
+      font-size: 18px;
       padding-top: 20px;
       padding-bottom: 30px;
       color: $gray;
@@ -150,10 +150,10 @@ page-carrinho {
     }
     .cancel-item {
       max-width: 100%;
-      margin-top: 5px;
+      margin-top: 10px;
     }
     .cancel-item-individual {
-      margin-top: 10px;
+      margin-top: 18px;
     }
     .container-qtd-produto {
       padding: 0;

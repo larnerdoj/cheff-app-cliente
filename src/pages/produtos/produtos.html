@@ -59,7 +59,7 @@
               <span *ngIf="produto.vl_promotion > 0" class="valor-normal">{{ GlobalsService.getCurrency(produto.vl_promotion) }}</span>
               <span class="valor-normal" [ngClass]="{'valor-normal': produto.valor > 0, 'valor-promocao': produto.vl_promotion > 0}">{{ GlobalsService.getCurrency(produto.valor) }}</span>
               <span *ngIf="produto.status == 'INDISPONIVEL'" class="indisponivel">Indisponível</span>
-              <button ion-button *ngIf="produto.status == 'DISPONIVEL'" (click)="this.CarrinhoProvider.addItemCarrinho(produto)"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
+              <button ion-button *ngIf="produto.status == 'DISPONIVEL'" (click)="this.CarrinhoProvider.addCart(produto)"><img src="assets/imgs/icons/shopping-bag-white.png"></button>
             </div>
           </ion-item>
         </ion-list>

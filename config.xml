@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="10000" id="innsere.app.cheff.cliente.com.br" version="2.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="10000" id="innsere.app.cheff.cliente.com.br" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Cheff Delivery</name>
-    <description>Aplicativo Cheff Delivery de comida do Cliente</description>
+    <description>Aplicativo Cheff Delivery de comida</description>
     <author email="contato@innsere.com.br" href="http://innsere.com/">INNSERE</author>
     <content src="index.html" />
     <access origin="*" />
@@ -95,5 +95,4 @@
     <plugin name="phonegap-plugin-barcodescanner" spec="^8.0.0">
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
     </plugin>
-    <engine name="android" spec="~7.0.0" />
 </widget>

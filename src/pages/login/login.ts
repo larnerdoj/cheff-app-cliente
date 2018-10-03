@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
+import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { CardapioPage } from "../cardapio/cardapio";
 //import {ErrorTokenPage} from "../error-token/error-token";
@@ -54,14 +54,15 @@ export class LoginPage {
         content: 'Carregando'
       });
       loading.present().then(() => {
-        this.HttpService.JSON_GET(`/comandas/mobile/login/token/${form.value.strToken}/${this.GlobalsService.strEmpresa}`, false, true, 'json')
+        this.HttpService.JSON_GET(`/comandas/mobile/login/token/${form.value.strToken}/${this.GlobalsService.strEmpresa}/true`, false, true, 'json')
           .then(
             (res) => {
               //console.log(res.json());
               if (res.json() === 'Comanda não encontrada!') {
+                loading.dismiss();
                 this.navCtrl.push(ErrorTokenPage);
                 setTimeout(() => {
-                  this.navCtrl.push(LoginPage, {animate: true, direction: 'back'})
+                  this.navCtrl.push(LoginPage, { animate: true, direction: 'back' })
                 }, 5000);
               } else {
                 //console.log(res.json());
@@ -73,9 +74,23 @@ export class LoginPage {
                 this.StorageService.setItem('credit', res.json().credit);
                 this.StorageService.setItem('mesa', res.json().mesa);
                 this.StorageService.setItem('atendente', res.json().atendente);
-                this.navCtrl.setRoot(CardapioPage, {paramStrToken: form.value.strToken});
+
+                //CARREGANDO CONFIGURACOES DA EMPRESA
+                this.HttpService.JSON_GET(`/configuracoes/${this.GlobalsService.strEmpresa}`, false, true, 'json')
+                  .then(
+                    (res) => {
+                      loading.dismiss();
+                      this.StorageService.setItem('qtdVias', res.json().qtd_vias);
+                      this.navCtrl.setRoot(CardapioPage, { paramStrToken: form.value.strToken });
+                    },
+                    (error) => {
+                      console.log(error);
+                      loading.dismiss();
+                    }
+                  )
+
               }
-              loading.dismiss();
+              //loading.dismiss();
             },
             (error) => {
               console.log(error);

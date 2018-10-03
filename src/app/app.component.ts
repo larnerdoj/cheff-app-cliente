@@ -32,6 +32,7 @@ import {ComandaFinalizadaPage} from "../pages/comanda-finalizada/comanda-finaliz
 import {CarrinhoPage} from "../pages/carrinho/carrinho";
 import {CarrinhoProvider} from "../providers/carrinho";
 import {ListPage} from "../pages/list/list";
+import { PesquisaPage } from '../pages/pesquisa/pesquisa';
 
 @Component({
   templateUrl: 'app.html'
@@ -61,8 +62,10 @@ export class CheffCliente {
     this.initializeApp();
 
     this.pages = [
-      { icon: 'menu.png', title: 'Cardapio', component: CardapioPage },
-      { icon: 'shopping-bag-white.png', title: 'Carrinho', component: CarrinhoPage }
+      { icon: 'md-arrow-dropright', title: 'Cardapio', component: CardapioPage },
+      { icon: 'md-arrow-dropright', title: 'Procurar', component: PesquisaPage },
+      { icon: 'md-arrow-dropright', title: 'Minha Sacola', component: CarrinhoPage },
+      { icon: 'md-arrow-dropright', title: 'Meus pedidos', component: CarrinhoPage }
     ];
 
     //CRIACÃO DA VÁRIAVEL DE LOGGED, MANTEM O USUÁRIO LOGADO ATÉ A COMANDA SER FINALIZADA
@@ -88,11 +91,7 @@ export class CheffCliente {
               //console.log(res.json());
               if (res.json() === 'Comanda não encontrada!') {
                 this.rootPage = ComandaFinalizadaPage;
-                this.StorageService.setItem('isLogged', false);
-                this.StorageService.setItem('nomeComanda', '');
-                this.StorageService.setItem('codigoComanda', '');
-                this.StorageService.setItem('idComanda', '');
-                this.StorageService.setItem('userId', '');
+                //this.StorageService.clear();
                 setTimeout(() => {
                   this.rootPage = LoginPage;
                 }, 5000);
@@ -121,33 +120,6 @@ export class CheffCliente {
 
   openPage(page) {
     this.nav.setRoot(page.component);
-  }
-
-  logout() {
-    let alert = this.AlertController.create({
-      title: 'Logout',
-      message: `Deseja fazer logout do APP?`,
-      buttons: [
-        {
-          text: 'Cancelar',
-          handler: () => {}
-        },
-        {
-          text: 'Logout',
-          handler: (res) => {
-            this.StorageService.setItem('isLogged', false);
-            this.StorageService.setItem('nomeComanda', '');
-            this.StorageService.setItem('idComanda', '');
-            this.StorageService.setItem('userId', '');
-
-            this.GlobalsService.getImgRandom();
-            this.rootPage = LoginPage;
-            this.nav.setRoot(LoginPage, {}, { animate: true, direction: 'forward' });
-          }
-        }
-      ]
-    });
-    alert.present();
   }
 
   exitApp() {

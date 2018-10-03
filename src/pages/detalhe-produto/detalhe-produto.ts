@@ -117,7 +117,7 @@ export class DetalheProdutoPage {
         {
           text: 'Ok',
           handler: (res) => {
-            this.CarrinhoProvider.addCartViewProduto(item, form.value.qtdProduto)
+            this.CarrinhoProvider.addCart(item, form.value.qtdProduto)
           }
         }
       ]
@@ -125,24 +125,5 @@ export class DetalheProdutoPage {
     alert.present();
     console.log(this.CarrinhoProvider.itensCart);
   }
-
-  preparaPedido()  {
-    let objAdd = [{
-      id: this.arDetalhesProduto.id,
-      codigo: this.arDetalhesProduto.code,
-      descricao: this.arDetalhesProduto.name,
-      categoria: this.arDetalhesProduto.categoria,
-      qtd: this.qtdProduto,
-      vl_unit: this.arDetalhesProduto.vl_venda,
-      is_promotion: this.arDetalhesProduto.is_promotion,
-      vl_promotion: this.arDetalhesProduto.vl_promotion,
-      vl_rate_promotion: this.arDetalhesProduto.vl_promotion,
-      print_item: `${this.arDetalhesProduto.print_item}/${this.arDetalhesProduto.print_ip}`,
-      obs: null
-    }];
-    this.itensComanda.push(objAdd[0]);
-    //console.log(this.itensComanda);
-    let total = this.itensComanda[0].qtd * ((this.arDetalhesProduto.vl_promotion > 0) ? this.arDetalhesProduto.vl_promotion : this.arDetalhesProduto.vl_venda);
-    this.CarrinhoProvider.enviaPedido(total, this.itensComanda);
-  }
+  
 }

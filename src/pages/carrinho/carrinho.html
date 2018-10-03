@@ -46,13 +46,13 @@
 
 <ion-content padding>
   <ion-grid>
-    <ion-row>
+    <ion-row class="row-no-padding">
       <ion-col col-12 class="col-12 container-branco">
         <h2 class="title-categorias text-center">Minha Sacola</h2>
         <h3 class="subtitle-categorias text-center">envie seu pedido de uma só vez</h3>
         <div *ngIf="CarrinhoProvider.itensCart.length === 0">
           <div class="col-12 text-center font-error-token">
-            Nenhum produto no carrinho!
+            Nenhum item na sacola!
           </div>
         </div>
         <ion-row *ngFor="let item of CarrinhoProvider.itensCart; let i = index" class="container-branco-bottom container-item-sacola">
@@ -82,7 +82,7 @@
         </ion-row>
       </ion-col>
       <ion-col col-12 class="container-branco container-branco-bottom text-center">
-        <span class="valor-pedido">
+        <span class="valor-pedido"><br>
           Total: <br>
           <b>{{ GlobalsService.getCurrency(CarrinhoProvider.totalCart) }}</b>
         </span>
@@ -131,7 +131,7 @@
             <span class="qtd-itens-pedidos">{{ pedido.qtd }}</span>
           </ion-col>
           <ion-col col-2 class="col-2 btn-refazer-pedido">
-            <img (click)="CarrinhoProvider.refazerPedido(pedido)" class="cancel-item" src="assets/imgs/icons/repeat.png" alt="">
+            <img (click)="CarrinhoProvider.preparaPedido(pedido)" class="cancel-item" src="assets/imgs/icons/repeat.png" alt="">
           </ion-col>
         </ion-row>
 
