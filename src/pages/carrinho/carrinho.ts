@@ -15,6 +15,7 @@ export class CarrinhoPage {
 
   public qtdProduto;
   arPedidos: Array<any>;
+  lenghtPedidos;
 
   constructor(
     public navCtrl: NavController,

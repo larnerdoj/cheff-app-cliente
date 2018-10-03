@@ -71,13 +71,13 @@
               </ion-col>
             </ion-row>
           </ion-col>
-          <ion-col col-2 class="col-2 container-qtd-produto">
+          <ion-col col-2 class="col-2 container-qtd-produto container-qtd-produto-individual">
             <button (click)="subtrai(i)" class="del">-</button>
             <input id="number2" type="number" [value]=item.qtd min="1">
             <button (click)="soma(i)" class="add">+</button>
           </ion-col>
           <ion-col>
-            <img (click)="cancelarItem(item)" class="cancel-item" src="assets/imgs/icons/cancel.png" alt="">
+            <img (click)="cancelarItem(item)" class="cancel-item cancel-item-individual" src="assets/imgs/icons/cancel.png" alt="">
           </ion-col>
         </ion-row>
       </ion-col>
@@ -103,7 +103,9 @@
       <ion-col col-12 class="container-branco container-branco-rounded">
         <h2 class="title-categorias text-center">Meus Pedidos</h2>
         <h3 class="subtitle-categorias text-center">itens já pedidos</h3>
-
+        <div *ngIf="CarrinhoProvider.lenghtPedidos == 0">
+          teste
+        </div>
         <ion-row *ngFor="let pedido of arPedidos" class="container-branco-bottom container-item-sacola">
           <ion-col col-7 class="col-7">
             <ion-row>
