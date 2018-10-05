@@ -8,7 +8,7 @@ Componente principal da aplicacao
 COMPONENTS
 ***********************************************/
 import { Component, ViewChild } from '@angular/core';
-import {AlertController, Nav, Platform} from 'ionic-angular';
+import { AlertController, Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpService } from "../providers/http";
@@ -21,17 +21,17 @@ SERVICES
 PAGES
 ***********************************************/
 import { HomePage } from '../pages/home/home';
-import {LoginPage} from "../pages/login/login";
-import {CardapioPage} from "../pages/cardapio/cardapio";
-import {ProdutosPage} from "../pages/produtos/produtos";
-import {DetalheProdutoPage} from "../pages/detalhe-produto/detalhe-produto";
-import {ErrorTokenPage} from "../pages/error-token/error-token";
-import {StorageService} from "../providers/storage";
-import {GlobalsService} from "../providers/globals";
-import {ComandaFinalizadaPage} from "../pages/comanda-finalizada/comanda-finalizada";
-import {CarrinhoPage} from "../pages/carrinho/carrinho";
-import {CarrinhoProvider} from "../providers/carrinho";
-import {ListPage} from "../pages/list/list";
+import { LoginPage } from "../pages/login/login";
+import { CardapioPage } from "../pages/cardapio/cardapio";
+import { ProdutosPage } from "../pages/produtos/produtos";
+import { DetalheProdutoPage } from "../pages/detalhe-produto/detalhe-produto";
+import { ErrorTokenPage } from "../pages/error-token/error-token";
+import { StorageService } from "../providers/storage";
+import { GlobalsService } from "../providers/globals";
+import { ComandaFinalizadaPage } from "../pages/comanda-finalizada/comanda-finalizada";
+import { CarrinhoPage } from "../pages/carrinho/carrinho";
+import { CarrinhoProvider } from "../providers/carrinho";
+import { ListPage } from "../pages/list/list";
 import { PesquisaPage } from '../pages/pesquisa/pesquisa';
 
 @Component({
@@ -46,7 +46,7 @@ export class CheffCliente {
   strNumero: string;
   public strToken;
 
-  pages: Array<{icon: string, title: string, component: any}>;
+  pages: Array<{ icon: string, title: string, component: any }>;
 
   constructor(
     //public navCtrl: NavController,
@@ -69,7 +69,7 @@ export class CheffCliente {
     ];
 
     //CRIACÃO DA VÁRIAVEL DE LOGGED, MANTEM O USUÁRIO LOGADO ATÉ A COMANDA SER FINALIZADA
-    if (this.StorageService.getItem('isLogged') === 'true')  {
+    if (this.StorageService.getItem('isLogged') === 'true') {
       this.GlobalsService.getImgRandom();
       this.rootPage = CardapioPage;
     } else {
@@ -85,26 +85,33 @@ export class CheffCliente {
       this.rootPage = LoginPage;
     } else {
       setInterval(() => {
-        this.HttpService.JSON_GET(`/comandas/mobile/login/token/${this.StorageService.getItem('codigoComanda')}/${this.GlobalsService.strEmpresa}`, false, true, 'json')
-          .then(
-            (res) =>{
-              //console.log(res.json());
-              if (res.json() === 'Comanda não encontrada!') {
-                this.rootPage = ComandaFinalizadaPage;
-                //this.StorageService.clear();
-                setTimeout(() => {
-                  this.rootPage = LoginPage;
-                }, 5000);
+
+        if (this.StorageService.getItem('isLogged') === 'true') {
+          this.HttpService.JSON_GET(`/comandas/mobile/login/token/${this.StorageService.getItem('codigoComanda')}/${this.GlobalsService.strEmpresa}`, false, true, 'json')
+            .then(
+              (res) => {
+                //console.log(res.json());
+                if (res.json() === 'Comanda não encontrada!') {
+                  this.rootPage = ComandaFinalizadaPage;
+                  this.StorageService.setItem('isLogged', false);
+                  //this.StorageService.clear();
+                  setTimeout(() => {
+                    this.rootPage = LoginPage;
+                  }, 5000);
+                  //console.log("Passou aqui!");
+                }
+
+              },
+              (error) => {
+                //console.log(error);
+                this.rootPage = LoginPage;
                 //console.log("Passou aqui!");
               }
+            )
 
-            },
-            (error) =>{
-              //console.log(error);
-              this.rootPage = LoginPage;
-              //console.log("Passou aqui!");
-            }
-          )
+        } else {
+          this.rootPage = LoginPage;
+        }
       }, 10000);
     }
 
@@ -129,7 +136,7 @@ export class CheffCliente {
       buttons: [
         {
           text: 'Cancelar',
-          handler: () => {}
+          handler: () => { }
         },
         {
           text: 'Sair',

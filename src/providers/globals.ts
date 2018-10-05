@@ -21,7 +21,7 @@ export class GlobalsService {
     lojaAndroid = '';
     lojaApple = '';
     lojaWindows = '';
-    strEmpresa: string = '2';
+    strEmpresa: string = '1';
     rootPage: any;
     pesquisa: string;
     descricao: string;

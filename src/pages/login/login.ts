@@ -57,6 +57,7 @@ export class LoginPage {
         this.HttpService.JSON_GET(`/comandas/mobile/login/token/${form.value.strToken}/${this.GlobalsService.strEmpresa}/true`, false, true, 'json')
           .then(
             (res) => {
+              console.log(res.json());
               //console.log(res.json());
               if (res.json() === 'Comanda não encontrada!') {
                 loading.dismiss();
